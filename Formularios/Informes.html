@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informes</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+            margin: 0;
+        }
+
+        .header-container {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+        }
+
+        header h1,
+        header nav {
+            margin: 0;
+        }
+
+        header nav a {
+            color: white;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #007bff;
+            margin-top: 20px;
+            margin-bottom: 40px; /* Añadir margen inferior */
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+        }
+
+        .footer-section {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-container">
+        <header class="container">
+            <h1 class="text-center">Mi Aplicación</h1>
+            <nav class="nav justify-content-center">
+                <a class="nav-link text-white" href="PaginaMaestra">Inicio</a>
+                <a class="nav-link text-white" href="#">Formulario</a>
+                <a class="nav-link text-white" href="#">Contacto</a>
+            </nav>
+        </header>
+    </div>
+    <div class="container mt-5">
+        <div class="form-container">
+            <div class="header-section">
+                <h4>Informes</h4>
+                <p>Seleccione los informes que desea generar</p>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="tipo-informe">Tipo de Informe</label>
+                    <select class="form-control" id="tipo-informe">
+                        <option value="equipos">Cantidad de Equipos</option>
+                        <option value="usuarios">Cantidad de Usuarios</option>
+                        <option value="cronogramas">Cronograma Mantenimientos</option>
+                        <option value="mantenimientos">Historial de Mantenimientos</option>
+                        <option value="entregas">Historial de Entregas</option>
+                        <option value="software">Inventario de Software</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fecha-inicio">Fecha de Inicio</label>
+                    <input type="date" class="form-control" id="fecha-inicio">
+                </div>
+                <div class="form-group">
+                    <label for="fecha-fin">Fecha de Fin</label>
+                    <input type="date" class="form-control" id="fecha-fin">
+                </div>
+                <button type="submit" class="btn btn-primary">Generar Informe</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-section">
+        <p>© 2024 SIEC WEB. Todos los derechos reservados.</p>
+    </div>
+</body>
+
+</html>

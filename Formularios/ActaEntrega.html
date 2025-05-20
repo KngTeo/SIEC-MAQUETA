@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acta de Entrega de penes</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            text-decoration: underline;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section {
+            text-align: center;
+            margin-top: 40px;
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+        }
+
+        .blue-section {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #007bff;
+        }
+
+        .header-container {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Slide Menu -->
+    <div id="slideMenu" class="slide-menu">
+        <span class="close-btn" onclick="toggleMenu()">&times;</span>
+        <a href="Masterpage.html">Inicio</a>
+        <a href="Empleados.html">Registro de Empleados</a>
+        <a href="Equipos.html">Registro de Equipos</a>
+        <div>
+            <div class="dropdown-title" onclick="toggleSubmenu('actasSubmenu')">Actas de Entrega</div>
+            <div id="actasSubmenu" class="submenu">
+                <a href="ActaEntrega.html">Acta de Entrega</a>
+                <a href="ActaEntregaRenting.html">Acta de Entrega Renting</a>
+                <a href="ActaEntregaPerifericos.html">Acta de Entrega Periféricos</a>
+            </div>
+        </div>
+        <div>
+            <div class="dropdown-title" onclick="toggleSubmenu('mantenimientosSubmenu')">Mantenimientos</div>
+            <div id="mantenimientosSubmenu" class="submenu">
+                <a href="Cronogramas.html">Cronograma</a>
+                <a href="MatenimientoPreventivo.html">Preventivo</a>
+                <a href="MantenimientoCorrectivo.html">Correctivo</a>
+            </div>
+        </div>
+        <a href="Informes.html">Informes</a>
+        <a href="Usuarios.html">Usuarios</a>
+        <a href="Login.html" onclick="logout()">Salir</a>
+    </div>
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <!-- Cabecera -->
+        <header class="header">
+            <button class="open-menu-btn" onclick="toggleMenu()">&#9776;</button>
+            <h1>SIEC</h1>
+        </header>
+    <div class="container mt-5">
+        <div class="form-container">
+            <div class="header-section">
+                <h4>Acta de Entrega Equipos de Cómputo (PC, Escáner, Impresora, Fotocopiadora, Lectores Etc.)</h4>
+                <p>Código: FOEI-0032 <br> Fecha: 13/10/2021 <br> Versión: 1</p>
+            </div>
+            <form>
+                <!-- Datos Generales -->
+                <div class="blue-section">Datos Generales</div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="fecha">Fecha</label>
+                        <input type="date" class="form-control" id="fecha" value="2024-12-11" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="acta">Nro. Acta</label>
+                        <input type="text" class="form-control" id="acta" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="empresa">Empresa</label>
+                    <input type="text" class="form-control" id="empresa" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="cedula">Cédula</label>
+                        <input type="text" class="form-control" id="cedula" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="area">Área/Departamento</label>
+                        <input type="text" class="form-control" id="area" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="cargo">Cargo</label>
+                        <input type="text" class="form-control" id="cargo" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="agencia">Agencia</label>
+                    <input type="text" class="form-control" id="agencia" required>
+                </div>
+
+                <!-- Características del Equipo -->
+                <div class="blue-section">Características del Equipo</div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="id-equipo">Id Equipo - Serial</label>
+                        <input type="text" class="form-control" id="id-equipo" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="tipo-equipo">Tipo de Equipo</label>
+                        <input type="text" class="form-control" id="tipo-equipo" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="sistema-operativo">Sistema Operativo</label>
+                        <input type="text" class="form-control" id="sistema-operativo" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="marca">Marca</label>
+                        <input type="text" class="form-control" id="marca" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="board">Board</label>
+                        <input type="text" class="form-control" id="board" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="tipo-disco">Tipo Disco Duro</label>
+                        <input type="text" class="form-control" id="tipo-disco" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="dir-mac">Dir. MAC Ppal</label>
+                        <input type="text" class="form-control" id="dir-mac" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="tamano-disco">Tamaño Disco Duro</label>
+                        <input type="text" class="form-control" id="tamano-disco" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="mouse">Mouse</label>
+                        <input type="text" class="form-control" id="mouse" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="teclado">Teclado</label>
+                        <input type="text" class="form-control" id="teclado" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="memoria-ram">Memoria Ram</label>
+                        <input type="text" class="form-control" id="memoria-ram" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="procesador">Procesador</label>
+                        <input type="text" class="form-control" id="procesador" required>
+                    </div>
+                </div>
+
+                <!-- Adicionales Técnica -->
+                <div class="blue-section">Adicionales Técnica</div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="id-equipo-serial">Id Equipo - Serial</label>
+                        <input type="text" class="form-control" id="id-equipo-serial">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="tipo-equipo-adicional">Tipo Equipo</label>
+                        <input type="text" class="form-control" id="tipo-equipo-adicional">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="modelo">Modelo</label>
+                        <input type="text" class="form-control" id="modelo">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="marca-adicional">Marca</label>
+                        <input type="text" class="form-control" id="marca-adicional">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="otros">Otros:</label>
+                    <textarea class="form-control" id="otros" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="accesorios">Accesorios:</label>
+                    <textarea class="form-control" id="accesorios" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="permisos-acceso">Permisos De Acceso a Internet</label>
+                    <select id="permisos-acceso" class="form-control">
+                        <option value="no">No</option>
+                        <option value="si">Sí</option>
+                    </select>
+                </div>
+
+                <!-- Entregado por -->
+                <div class="blue-section">Entregado por:</div>
+                <div class="form-group">
+                    <label for="nombre-entregado">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre-entregado" required>
+                </div>
+                <div class="form-group">
+                    <label for="firma-entregado">Firma:</label>
+                    <input type="text" class="form-control" id="firma-entregado" required>
+                </div>
+
+                <!-- Recibido por -->
+                <div class="blue-section">Recibido por:</div>
+                <div class="form-group">
+                    <label for="nombre-recibido">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre-recibido" required>
+                </div>
+                <div class="form-group">
+                    <label for="firma-recibido">Firma:</label>
+                    <input type="text" class="form-control" id="firma-recibido" required>
+                </div>
+
+                <!-- Aprobado por -->
+                <div class="blue-section">Aprobado por:</div>
+                <div class="form-group">
+                    <label for="nombre-aprobado">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre-aprobado" required>
+                </div>
+                <div class="form-group">
+                    <label for="firma-aprobado">Firma:</label>
+                    <input type="text" class="form-control" id="firma-aprobado" required>
+                </div>
+                <div class="form-group">
+                    <label for="cargo-aprobado">Cargo:</label>
+                    <input type="text" class="form-control" id="cargo-aprobado" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacion-final">Observación</label>
+                    <textarea class="form-control" id="observacion-final" rows="2"></textarea>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    <div class="footer-section">
+      <p>© 2024 SIEC WEB. Todos los derechos reservados.</p>
+    </div>
+</body>
+
+</html>

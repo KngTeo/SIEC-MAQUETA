@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mantenimiento Correctivo</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            text-decoration: underline;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section {
+            text-align: center;
+            margin-top: 40px;
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+        }
+
+        .blue-section {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #007bff;
+        }
+
+        .header-container {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-container">
+        <header class="container">
+            <h1 class="text-center">SIEC WEB</h1>
+            <nav class="nav justify-content-center">
+                <a class="nav-link text-white" href="PaginaMaestra.aspx">Inicio</a>
+                <a class="nav-link text-white" href="#">Formulario</a>
+                <a class="nav-link text-white" href="Contacto.aspx">Contacto</a>
+            </nav>
+        </header>
+    </div>
+    <div class="container form-container">
+        <div class="header-section">
+                <h4>FORMATO MANTENIMIENTO PREVENTIVO</h4>
+                <p>Código: FOI6-004 <br> Fecha: 06/02/2020 <br> Versión: 1</p>
+        </div>
+        <h4 class="section-title">Información General</h4>
+        <table class="table table-bordered">
+            <tr>
+                <th class="bg-grey">Nro. Acta</th>
+                <td><input type="text" class="form-control"></td>
+                <th class="bg-grey">Fecha</th>
+                <td><input type="date" class="form-control"></td>
+            </tr>
+            <tr>
+                <th class="bg-grey">Cédula</th>
+                <td><input type="text" class="form-control"></td>
+                <th class="bg-grey">Responsable</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <th class="bg-grey">Área / Equipo</th>
+                <td colspan="3"><input type="text" class="form-control"></td>
+            </tr>
+        </table>
+
+        <h4 class="section-title">Información del Equipo</h4>
+        <table class="table table-bordered">
+            <tr>
+                <th class="bg-grey">Serial Equipo</th>
+                <td><input type="text" class="form-control"></td>
+                <th class="bg-grey">Tipo Mantenimiento</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <th class="bg-grey">Agencia</th>
+                <td><input type="text" class="form-control"></td>
+                <th class="bg-grey">Tipo de Equipo</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+        </table>
+
+        <h4 class="section-title">Actividades Desarrolladas</h4>
+        <table class="table table-bordered">
+            <tr>
+                <td><textarea class="form-control" rows="5"></textarea></td>
+            </tr>
+        </table>
+
+        <h4 class="section-title">Recomendaciones</h4>
+        <table class="table table-bordered">
+            <tr>
+                <td><textarea class="form-control" rows="5"></textarea></td>
+            </tr>
+        </table>
+
+        <h4 class="section-title">Estado del Equipo</h4>
+        <table class="table table-bordered">
+            <tr>
+                <td><textarea class="form-control" rows="2"></textarea></td>
+            </tr>
+        </table>
+
+        <h4 class="section-title">Observaciones</h4>
+        <table class="table table-bordered">
+            <tr>
+                <td><textarea class="form-control" rows="2"></textarea></td>
+            </tr>
+        </table>
+
+        <h4 class="section-title">Revisa y Aprueba</h4>
+        <table class="table table-bordered">
+            <tr>
+                <th class="bg-grey">Usuario PC</th>
+                <td></td>
+                <th class="bg-grey">Revisa y Aprueba</th>
+                <td>Juan Rios Montoya</td>
+            </tr>
+            <tr>
+                <th class="bg-grey">Cargo</th>
+                <td colspan="3">Director de Sistemas e Informática</td>
+            </tr>
+        </table>
+
+        <div class="text-center mt-4">
+            <p>Mototransportamos SAS</p>
+        </div>
+    </div>
+
+    <footer class="footer-section">
+        <p>&copy; 2024 SIEC WEB. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

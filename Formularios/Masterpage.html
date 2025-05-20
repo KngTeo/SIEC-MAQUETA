@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f0f5ff; /* A lighter blue pastel color */
+    }
+
+    .slide-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #d9e2ef; /* Blue pastel */
+      color: #333; /* Darker blue for contrast */
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .slide-menu a {
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #333; /* Darker blue for contrast */
+      display: block;
+      transition: 0.2s;
+    }
+
+    .slide-menu a:hover {
+      background-color: #cccccc;
+    }
+
+    .slide-menu .submenu {
+      margin-left: 15px;
+      display: none;
+    }
+
+    .slide-menu .submenu a {
+      font-size: 16px;
+    }
+
+    .slide-menu .dropdown-title {
+      font-size: 18px;
+      color: #333; /* Darker blue for contrast */
+      text-align: left;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .slide-menu .dropdown-title:hover {
+      background-color: #cccccc;
+    }
+
+    .slide-menu .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .open-menu-btn {
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+      padding: 0;
+    }
+
+    .main-content {
+      flex: 1;
+      transition: margin-left 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #4CAF50; /* Green color */
+      color: white;
+      padding: 10px;
+      position: relative;
+    }
+
+    .header h1 {
+      margin: 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .footer {
+      background-color: #4CAF50; /* Dark color */
+      color: #f0f5ff; /* Light pastel color for text */
+      text-align: center;
+      padding: 10px 0;
+      margin-top: auto;
+    }
+
+    @media (min-width: 768px) {
+      .slide-menu {
+        width: 250px;
+        padding-top: 0;
+        position: fixed;
+      }
+      .main-content {
+        margin-left: 250px;
+      }
+      .slide-menu .close-btn {
+        display: none;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .slide-menu {
+        position: fixed
+    </style>
+</head>
+<body>
+    <!-- Slide Menu -->
+    <div id="slideMenu" class="slide-menu">
+        <span class="close-btn" onclick="toggleMenu()">&times;</span>
+        <a href="Empleados.html">Registro de Empleados</a>
+        <a href="Equipos.html">Registro de Equipos</a>
+        <div>
+            <div class="dropdown-title" onclick="toggleSubmenu('actasSubmenu')">Actas de Entrega</div>
+            <div id="actasSubmenu" class="submenu">
+                <a href="ActaEntrega.html">Acta de Entrega</a>
+                <a href="ActaEntregaRenting.html">Acta de Entrega Renting</a>
+                <a href="ActaEntregaPerifericos.html">Acta de Entrega Periféricos</a>
+            </div>
+        </div>
+        <div>
+            <div class="dropdown-title" onclick="toggleSubmenu('mantenimientosSubmenu')">Mantenimientos</div>
+            <div id="mantenimientosSubmenu" class="submenu">
+                <a href="Cronogramas.html">Cronograma</a>
+                <a href="MatenimientoPreventivo.html">Preventivo</a>
+                <a href="MantenimientoCorrectivo.html">Correctivo</a>
+            </div>
+        </div>
+        <a href="Informes.html">Informes</a>
+        <a href="Usuarios.html">Usuarios</a>
+        <a href="Login.html" onclick="logout()">Salir</a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <!-- Cabecera -->
+        <header class="header">
+            <button class="open-menu-btn" onclick="toggleMenu()">&#9776;</button>
+            <h1>SIEC</h1>
+        </header>
+
+        <!-- Contenido Principal -->
+        <main class="container mt-5">
+            <h1>Bienvenido a SIEC</h1>
+            <p>SIEC web, la aplicación para que lleves el inventario de tus equipos de forma organizada.</p>
+
+            <h2>Dashboard</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card text-white bg-primary mb-3">
+                        <div class="card-header">Empleados Registrados</div>
+                        <div class="card-body">
+                            <h5 class="card-title" id="userCount">0</h5>
+                            <p class="card-text">Total de empleados registrados.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card text-white bg-success mb-3">
+                        <div class="card-header">Equipos Registrados</div>
+                        <div class="card-body">
+                            <h5 class="card-title" id="equipmentCount">0</h5>
+                            <p class="card-text">Total de equipos registrados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Pie de Página -->
+        <footer class="footer">
+            <p>&copy; 2024 SIEC. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const slideMenu = document.getElementById('slideMenu');
+            const mainContent = document.querySelector('.main-content');
+            if (slideMenu.style.width === '250px') {
+                slideMenu.style.width = '0';
+                mainContent.style.marginLeft = '0';
+            } else {
+                slideMenu.style.width = '250px';
+                mainContent.style.marginLeft = '250px';
+            }
+        }
+
+        function toggleSubmenu(submenuId) {
+            const submenu = document.getElementById(submenuId);
+            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function logout() {
+            // Implementar funcionalidad de logout si es necesario
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/salir.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
