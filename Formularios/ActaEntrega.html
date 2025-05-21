@@ -8,22 +8,108 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         
-        body {
-            background-color: #f8f9fa;
-        }
+   body {
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f0f5ff; /* A lighter blue pastel color */
+    }
 
-        .header-section {
-            text-align: center;
-            margin-bottom: 20px;
-            background-color: #007bff;
-            color: white;
-            padding: 15px;
-        }
+    .slide-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #d9e2ef; /* Blue pastel */
+      color: #333; /* Darker blue for contrast */
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .slide-menu a {
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #333; /* Darker blue for contrast */
+      display: block;
+      transition: 0.2s;
+    }
+
+    .slide-menu a:hover {
+      background-color: #cccccc;
+    }
+
+    .slide-menu .submenu {
+      margin-left: 15px;
+      display: none;
+    }
+
+    .slide-menu .submenu a {
+      font-size: 16px;
+    }
+
+    .slide-menu .dropdown-title {
+      font-size: 18px;
+      color: #333; /* Darker blue for contrast */
+      text-align: left;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .slide-menu .dropdown-title:hover {
+      background-color: #cccccc;
+    }
+
+    .slide-menu .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .open-menu-btn {
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+      padding: 0;
+    }
+
+    .main-content {
+      flex: 1;
+      transition: margin-left 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #4CAF50; /* Green color */
+      color: white;
+      padding: 10px;
+      position: relative;
+    }
+
+    .header h1 {
+      margin: 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
         .section-title {
             font-weight: bold;
             text-decoration: underline;
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
             padding: 10px;
             margin-top: 20px;
@@ -37,13 +123,13 @@
         .footer-section {
             text-align: center;
             margin-top: 40px;
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
             padding: 15px;
         }
 
         .blue-section {
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
             padding: 10px;
             margin-bottom: 10px;
@@ -54,11 +140,11 @@
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border: 2px solid #007bff;
+            border: 2px solid #4CAF50;
         }
 
         .header-container {
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
             padding: 10px;
             margin-bottom: 20px;
@@ -297,6 +383,28 @@
     <div class="footer-section">
       <p>© 2024 SIEC WEB. Todos los derechos reservados.</p>
     </div>
+    <script script>
+        function toggleMenu() {
+            const slideMenu = document.getElementById('slideMenu');
+            const mainContent = document.querySelector('.main-content');
+            if (slideMenu.style.width === '250px') {
+                slideMenu.style.width = '0';
+                mainContent.style.marginLeft = '0';
+            } else {
+                slideMenu.style.width = '250px';
+                mainContent.style.marginLeft = '250px';
+            }
+        }
+
+        function toggleSubmenu(submenuId) {
+            const submenu = document.getElementById(submenuId);
+            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function logout() {
+            // Implementar funcionalidad de logout si es necesario
+        }
+    </script>
 </body>
 
 </html>

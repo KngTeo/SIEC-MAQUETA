@@ -4,45 +4,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acta de Entrega de penes</title>
+    <title>Acta de Entrega Renting</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
+           body {
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f0f5ff; /* A lighter blue pastel color */
+    }
 
-        .header-section {
-            text-align: center;
-            margin-bottom: 20px;
-            background-color: #007bff;
-            color: white;
-            padding: 15px;
-        }
+    .slide-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #d9e2ef; /* Blue pastel */
+      color: #333; /* Darker blue for contrast */
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 1000;
+    }
 
-        .section-title {
-            font-weight: bold;
-            text-decoration: underline;
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
+    .slide-menu a {
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #333; /* Darker blue for contrast */
+      display: block;
+      transition: 0.2s;
+    }
 
-        .form-group {
-            margin-bottom: 1rem;
-        }
+    .slide-menu a:hover {
+      background-color: #cccccc;
+    }
+
+    .slide-menu .submenu {
+      margin-left: 15px;
+      display: none;
+    }
+
+    .slide-menu .submenu a {
+      font-size: 16px;
+    }
+
+    .slide-menu .dropdown-title {
+      font-size: 18px;
+      color: #333; /* Darker blue for contrast */
+      text-align: left;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .slide-menu .dropdown-title:hover {
+      background-color: #cccccc;
+    }
+
+    .slide-menu .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .open-menu-btn {
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+      padding: 0;
+    }
+
+    .main-content {
+      flex: 1;
+      transition: margin-left 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+     .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #4CAF50; /* Green color */
+      color: white;
+      padding: 10px;
+      position: relative;
+    }
+
+    .header h1 {
+      margin: 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
         .footer-section {
             text-align: center;
             margin-top: 40px;
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
             padding: 15px;
         }
 
         .blue-section {
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
             padding: 10px;
             margin-bottom: 10px;
@@ -53,29 +124,47 @@
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border: 2px solid #007bff;
+            border: 2px solid #4CAF50;
         }
 
-        .header-container {
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
+
     </style>
 </head>
 
 <body>
-    <div class="header-container">
-        <header class="container">
-            <h1 class="text-center">SIEC WEB</h1>
-            <nav class="nav justify-content-center">
-                <a class="nav-link text-white" href="PaginaMaestra.aspx">Inicio</a>
-                <a class="nav-link text-white" href="#">Formulario</a>
-                <a class="nav-link text-white" href="Contacto.aspx">Contacto</a>
-            </nav>
-        </header>
+<!-- Slide Menu -->
+    <div id="slideMenu" class="slide-menu">
+        <span class="close-btn" onclick="toggleMenu()">&times;</span>
+        <a href="Masterpage.html">Inicio</a>
+        <a href="Empleados.html">Registro de Empleados</a>
+        <a href="Equipos.html">Registro de Equipos</a>
+        <div>
+            <div class="dropdown-title" onclick="toggleSubmenu('actasSubmenu')">Actas de Entrega</div>
+            <div id="actasSubmenu" class="submenu">
+                <a href="ActaEntrega.html">Acta de Entrega</a>
+                <a href="ActaEntregaRenting.html">Acta de Entrega Renting</a>
+                <a href="ActaEntregaPerifericos.html">Acta de Entrega Periféricos</a>
+            </div>
+        </div>
+        <div>
+            <div class="dropdown-title" onclick="toggleSubmenu('mantenimientosSubmenu')">Mantenimientos</div>
+            <div id="mantenimientosSubmenu" class="submenu">
+                <a href="Cronogramas.html">Cronograma</a>
+                <a href="MatenimientoPreventivo.html">Preventivo</a>
+                <a href="MantenimientoCorrectivo.html">Correctivo</a>
+            </div>
+        </div>
+        <a href="Informes.html">Informes</a>
+        <a href="Usuarios.html">Usuarios</a>
+        <a href="Login.html" onclick="logout()">Salir</a>
     </div>
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <!-- Cabecera -->
+        <header class="header">
+            <button class="open-menu-btn" onclick="toggleMenu()">&#9776;</button>
+            <h1>SIEC</h1>
+        </header>
     <div class="container mt-5">
         <div class="form-container">
             <div class="header-section">
@@ -273,6 +362,28 @@
     <div class="footer-section">
       <p>© 2024 SIEC WEB. Todos los derechos reservados.</p>
     </div>
+    <script script>
+        function toggleMenu() {
+            const slideMenu = document.getElementById('slideMenu');
+            const mainContent = document.querySelector('.main-content');
+            if (slideMenu.style.width === '250px') {
+                slideMenu.style.width = '0';
+                mainContent.style.marginLeft = '0';
+            } else {
+                slideMenu.style.width = '250px';
+                mainContent.style.marginLeft = '250px';
+            }
+        }
+
+        function toggleSubmenu(submenuId) {
+            const submenu = document.getElementById(submenuId);
+            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function logout() {
+            // Implementar funcionalidad de logout si es necesario
+        }
+    </script>
 </body>
 
 </html>
