@@ -171,7 +171,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 form-container">
-                <form id="userForm" method="post" action="/Empleados/Create">
+                <form id="userForm">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" id="nombre" required>
@@ -365,6 +365,13 @@
         <footer class="footer">
             <p>&copy; 2024 SIEC. Todos los derechos reservados.</p>
         </footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="empleados.js"></script>
+<script src="slideMenu.js"></script>
+
 <script script>
         function toggleMenu() {
             const slideMenu = document.getElementById('slideMenu');
@@ -387,79 +394,5 @@
             // Implementar funcionalidad de logout si es necesario
         }
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Función para abrir el modal
-            $('#openModal').click(function () {
-                $('#asignarModal').modal('show');
-            });
-
-            // Guardar la asignación o desasignación
-            $('#saveAssignment').click(function () {
-                var empleadoId = $('#empleadoId').val();
-                var equipoId = $('#equipoId').val();
-                var observaciones = $('#observaciones').val();
-                var accion = $('#accion').val();
-
-                // Aquí puedes agregar la lógica para guardar los datos
-                // o enviarlos al servidor si es necesario
-
-                // Luego cierra el modal
-                $('#asignarModal').modal('hide');
-            });
-
-            $('#userForm').submit(function (event) {
-    $('#userForm').submit(function (event) {
-    event.preventDefault();
-
-    const empleado = {
-        nombre: $('#nombre').val(),
-        apellidos: $('#apellidos').val(),
-        telefono: $('#telefono').val(),
-        cargo: $('#cargo').val(),
-        area: $('#area').val(),
-        correo: $('#correo').val(),
-        empresa: $('#empresa').val(),
-        activo: $('#activo').val()
-    };
-
-    fetch('http://localhost:3000/api/empleados', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(empleado)
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);
-        $('#userTable').append(`
-            <tr>
-                <td>${data.empleadoId}</td>
-                <td>${empleado.nombre}</td>
-                <td>${empleado.apellidos}</td>
-                <td>${empleado.telefono}</td>
-                <td>${empleado.cargo}</td>
-                <td>${empleado.area}</td>
-                <td>${empleado.correo}</td>
-                <td>${empleado.empresa}</td>
-                <td>${empleado.activo}</td>
-                <td>
-                    <button class="btn btn-primary btn-action">Editar</button>
-                    <button class="btn btn-danger btn-action">Eliminar</button>
-                </td>
-            </tr>
-        `);
-        $('#userForm')[0].reset();
-    })
-    .catch(error => {
-        console.error('Error al registrar empleado:', error);
-        alert('Error al agregar empleado.');
-    });
-});
-    </script>
-</body>
+    
 </html>

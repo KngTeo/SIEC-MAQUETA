@@ -1,0 +1,10 @@
+# Node.js
+node_modules/
+.env
+
+# Editor config
+.vscode/
+.DS_Store
+
+# Archivos temporales
+*.log
