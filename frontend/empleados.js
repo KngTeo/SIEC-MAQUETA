@@ -113,3 +113,29 @@ $(document).on('click', '.btn-editar', function () {
     alert('No se pudo editar el empleado.');
   });
 });
+//Mostrar tablas
+$(document).ready(function () {
+  fetch('http://localhost:3000/api/empleados')
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(emp => {
+        $('#userTable').append(`
+          <tr data-id="${emp.EmpleadoID}">
+            <td>${emp.EmpleadoID}</td>
+            <td>${emp.Nombre}</td>
+            <td>${emp.Apellido}</td>
+            <td>${emp.Telefono}</td>
+            <td>${emp.Cargo}</td>
+            <td>${emp.Area}</td>
+            <td>${emp.Correo}</td>
+            <td>${emp.Empresa}</td>
+            <td>${emp.Activo}</td>
+            <td>
+              <button class="btn btn-warning btn-sm btn-editar">Editar</button>
+              <button class="btn btn-danger btn-sm btn-eliminar">Eliminar</button>
+            </td>
+          </tr>
+        `);
+      });
+    });
+});
