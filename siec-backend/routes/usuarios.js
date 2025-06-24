@@ -64,3 +64,28 @@ router.get('/', (req, res) => {
 });
 
 module.exports = router;
+
+
+//login
+
+router.post('/login', (req, res) => {
+  const { nombreUsuario, contrasena } = req.body;
+
+  const sql = 'SELECT * FROM usuarios WHERE NombreUsuario = ? AND Contrasena = ?';
+  db.query(sql, [nombreUsuario, contrasena], (err, results) => {
+    if (err) {
+      console.error('Error en la consulta de login:', err);
+      return res.status(500).json({ message: 'Error en el servidor' });
+    }
+
+    if (results.length === 0) {
+      return res.status(401).json({ message: 'Credenciales inválidas' });
+    }
+
+    const usuario = results[0];
+    res.json({
+      message: 'Inicio de sesión exitoso',
+      tipoUsuario: usuario.TipoUsuario
+    });
+  });
+});

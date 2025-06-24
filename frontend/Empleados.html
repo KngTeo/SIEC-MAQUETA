@@ -1,398 +1,234 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuarios</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-    body {
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      background-color: #f0f5ff; /* A lighter blue pastel color */
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIEC – Empleados</title>
 
-    .slide-menu {
-      height: 100%;
-      width: 0;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background-color: #d9e2ef; /* Blue pastel */
-      color: #333; /* Darker blue for contrast */
-      overflow-x: hidden;
-      transition: 0.3s;
-      padding-top: 60px;
-      z-index: 1000;
-    }
+     <!-- Bootstrap 4 -->
+<link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 
-    .slide-menu a {
-      padding: 10px 20px;
-      text-decoration: none;
-      font-size: 18px;
-      color: #333; /* Darker blue for contrast */
-      display: block;
-      transition: 0.2s;
-    }
+<style>
+  /* -------------- Layout general -------------- */
+  body{overflow-x:hidden;display:flex;flex-direction:column;min-height:100vh;background:#f0f5ff}
+  .main-content{flex:1;margin-left:250px;padding-bottom:60px}  /* espacio para footer fijo */
 
-    .slide-menu a:hover {
-      background-color: #cccccc;
-    }
+  /* -------------- Slide‑menu -------------- */
+  .slide-menu{height:100%;width:250px;position:fixed;top:0;left:0;background:#d9e2ef;
+              color:#333;padding-top:60px;overflow-y:auto}
+  .slide-menu a{display:block;padding:12px 20px;text-decoration:none;color:#333}
+  .slide-menu a:hover,.slide-menu .dropdown-title:hover{background:#ccc}
+  .slide-menu .dropdown-title{padding:12px 20px;font-weight:600;cursor:pointer}
+  .submenu{display:none;padding-left:15px}
 
-    .slide-menu .submenu {
-      margin-left: 15px;
-      display: none;
-    }
+  /* -------------- Header / Footer -------------- */
+    .footer{background:#4CAF50;color:#fff;text-align:center;padding:10px 0}
+    .header{position:sticky;top:0;z-index:1001}
+    .footer{position:fixed;bottom:0;left:0;width:100%;z-index:999}
 
-    .slide-menu .submenu a {
-      font-size: 16px;
-    }
+  /* -------------- Tarjetas -------------- */
+  .card-sm{border-radius:12px;box-shadow:0 0 6px rgba(0,0,0,.1)}
 
-    .slide-menu .dropdown-title {
-      font-size: 18px;
-      color: #333; /* Darker blue for contrast */
-      text-align: left;
-      padding: 10px 20px;
-      cursor: pointer;
-    }
+  /* -------------- Responsive -------------- */
+  @media(max-width:767px){
+    .slide-menu{width:0}
+    .main-content{margin-left:0}
+  }
+</style>
 
-    .slide-menu .dropdown-title:hover {
-      background-color: #cccccc;
-    }
 
-    .slide-menu .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 24px;
-      color: white;
-      cursor: pointer;
-    }
 
-    .open-menu-btn {
-      font-size: 24px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      color: white;
-      padding: 0;
-    }
-
-    .main-content {
-      flex: 1;
-      transition: margin-left 0.3s;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background-color: #4CAF50; /* Green color */
-      color: white;
-      padding: 10px;
-      position: relative;
-    }
-
-    .header h1 {
-      margin: 0;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .footer {
-      background-color: #4CAF50; /* Dark color */
-      color: #f0f5ff; /* Light pastel color for text */
-      text-align: center;
-      padding: 10px 0;
-      margin-top: auto;
-    }
-
-    @media (min-width: 768px) {
-      .slide-menu {
-        width: 250px;
-        padding-top: 0;
-        position: fixed;
-      }
-      .main-content {
-        margin-left: 250px;
-      }
-      .slide-menu .close-btn {
-        display: none;
-      }
-    }
-
-    @media (max-width: 767px) {
-      .slide-menu {
-        position: fixed
-    </style>
 </head>
 <body>
-    <!-- Slide Menu -->
-    <div id="slideMenu" class="slide-menu">
-        <span class="close-btn" onclick="toggleMenu()">&times;</span>
-        <a href="Masterpage.html">Inicio</a>
-        <a href="Empleados.html">Registro de Empleados</a>
-        <a href="Equipos.html">Registro de Equipos</a>
-        <div>
-            <div class="dropdown-title" onclick="toggleSubmenu('actasSubmenu')">Actas de Entrega</div>
-            <div id="actasSubmenu" class="submenu">
-                <a href="ActaEntrega.html">Acta de Entrega</a>
-                <a href="ActaEntregaRenting.html">Acta de Entrega Renting</a>
-                <a href="ActaEntregaPerifericos.html">Acta de Entrega Periféricos</a>
-            </div>
-        </div>
-        <div>
-            <div class="dropdown-title" onclick="toggleSubmenu('mantenimientosSubmenu')">Mantenimientos</div>
-            <div id="mantenimientosSubmenu" class="submenu">
-                <a href="Cronogramas.html">Cronograma</a>
-                <a href="MatenimientoPreventivo.html">Preventivo</a>
-                <a href="MantenimientoCorrectivo.html">Correctivo</a>
-            </div>
-        </div>
-        <a href="Informes.html">Informes</a>
-        <a href="Usuarios.html">Usuarios</a>
-        <a href="Login.html" onclick="logout()">Salir</a>
-    </div>
-    <!-- Contenido principal -->
-    <div class="main-content">
-        <!-- Cabecera -->
-        <header class="header">
-            <button class="open-menu-btn" onclick="toggleMenu()">&#9776;</button>
-            <h1>SIEC</h1>
-        </header>
-    <div class="container-flex container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Registro de Empleados</h2>
-        </div>
-        <div class="row">
-            <div class="col-md-4 form-container">
-                <form id="userForm">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="apellidos">Apellidos</label>
-                        <input type="text" class="form-control" id="apellidos" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="telefono">Teléfono</label>
-                        <input type="text" class="form-control" id="telefono" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cargo">Cargo</label>
-                        <select class="form-control" id="cargo" required>
-                            <option value="">Selecciona un cargo</option>
-                            <optgroup label="Asesoría">
-                                <option value="Abogado">Abogad@</option>
-                                <option value="Asesor Comercial">Asesor@ Comercial</option>
-                            </optgroup>
-                            <optgroup label="Gerencia y Dirección">
-                                <option value="Director Administrativo">Director@ Administrativo</option>
-                                <option value="Gerente General">Gerente Gral</option>
-                            </optgroup>
-                            <optgroup label="Operaciones">
-                                <option value="Analista de Transporte">Analista de Transporte</option>
-                                <option value="Coordinador de Bodega">Coordinador@ de Bodega</option>
-                            </optgroup>
-                            <optgroup label="Administración">
-                                <option value="Asistente Administrativo">Asistente Administrativo</option>
-                                <option value="Auxiliar Administrativa">Auxiliar Administrativa</option>
-                            </optgroup>
-                            <optgroup label="Técnico">
-                                <option value="Analista de Sistemas">Analista de Sistemas</option>
-                                <option value="Programador">Programador</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="area">Área</label>
-                        <select class="form-control" id="area" required>
-                            <option value="">Selecciona un Área</option>
-                            <optgroup label="Administración">
-                                <option value="Administrativa">Administrativa</option>
-                                <option value="Contabilidad">Contabilidad</option>
-                                <option value="Financiera">Financiera</option>
-                                <option value="Gerencia">Gerencia</option>
-                                <option value="Subgerencia">Subgerencia</option>
-                                <option value="Tesoreria">Tesoreria</option>
-                                <option value="Control Interno">Control Interno</option>
-                            </optgroup>
-                            <optgroup label="Operaciones">
-                                <option value="Bodega">Bodega</option>
-                                <option value="Despachos">Despachos</option>
-                                <option value="Logística">Logística</option>
-                                <option value="Mantenimiento">Mantenimiento</option>
-                                <option value="Operaciones">Operaciones</option>
-                                <option value="Control Trafico">Control Trafico</option>
-                            </optgroup>
-                            <optgroup label="Recursos Humanos">
-                                <option value="Talento Humano">Talento Humano</option>
-                            </optgroup>
-                            <optgroup label="Comercial">
-                                <option value="Afiliaciones">Afiliaciones</option>
-                                <option value="Comercial">Comercial</option>
-                                <option value="Licitaciones">Licitaciones</option>
-                                <option value="Publicidad">Publicidad</option>
-                                <option value="Servicio al Cliente">Servicio al Cliente</option>
-                            </optgroup>
-                            <optgroup label="Técnico">
-                                <option value="CAD">CAD</option>
-                                <option value="Programación">Programación</option>
-                                <option value="Sistemas">Sistemas</option>
-                                <option value="SST">SST</option>
-                            </optgroup>
-                            <optgroup label="Otros">
-                                <option value="Cartera">Cartera</option>
-                                <option value="Facturacion">Facturación</option>
-                                <option value="Multas">Multas</option>
-                                <option value="Seguridad">Seguridad</option>
-                                <option value="Seguros">Seguros</option>
-                                <option value="Serv. Especiales">Serv. Especiales</option>
-                                <option value="Servicios Generales">Servicios Generales</option>
-                                <option value="Archivo">Archivo</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="correo">Correo</label>
-                        <input type="email" class="form-control" id="correo" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="empresa">Empresa</label>
-                        <select class="form-control" id="empresa" required>
-                            <option value="">Selecciona una Empresa</option>
-                            <optgroup label="Transporte y Logística">
-                                <option value="Mototransportamos">Mototransportamos SAS</option>
-                                <option value="Refrilogistica">Refrilogistica SAS</option>
-                                <option value="Cefatrans">Cefatrans SAS</option>
-                            </optgroup>
-                            <optgroup label="Servicios">
-                                <option value="Motoseguridad">Motoseguridad Ltda</option>
-                                <option value="Tramitar Seguros">Tramitar Seguros SAS</option>
-                                <option value="Labor Health IPS">Labor Health IPS</option>
-                                <option value="Utciant">Utciant</option>
-                            </optgroup>
-                            <optgroup label="Otras">
-                                <option value="Cia Capri">Cia Capri SAS</option>
-                                <option value="Funcionarios Team">Funcionarios Team</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="activo">Activo</label>
-                        <select class="form-control" id="activo" required>
-                            <option value="Si">Si</option>
-                            <option value="No">No</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Agregar</button>
-                    <button type="button" class="btn btn-secondary" id="openModal">Asignar Equipos</button>
-                </form>
-            </div>
-            <div class="col-md-8">
-                <h3 class="title-centered">Lista de Usuarios</h3>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Apellidos</th>
-                                <th>Teléfono</th>
-                                <th>Cargo</th>
-                                <th>Área</th>
-                                <th>Correo</th>
-                                <th>Empresa</th>
-                                <th>Activo</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userTable">
-                            <!-- Aquí se agregarán las filas de la tabla -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Modal Asignar/Desasignar -->
-    <div class="modal fade" id="asignarModal" tabindex="-1" role="dialog" aria-labelledby="asignarModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="asignarModalLabel">Asignar Equipos</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="empleadoId">ID del Empleado</label>
-                        <input type="text" class="form-control" id="empleadoId">
-                    </div>
-                    <div class="form-group">
-                        <label for="equipoId">ID del Equipo</label>
-                        <input type="text" class="form-control" id="equipoId">
-                    </div>
-                    <div class="form-group">
-                        <label for="observaciones">Observaciones</label>
-                        <textarea class="form-control" id="observaciones"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="accion">Acción</label>
-                        <select class="form-control" id="accion">
-                            <option value="Asignar">Asignar</option>
-                            <option value="Desasignar">Desasignar</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="saveAssignment">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- ---------- Menú lateral ---------- -->
+<nav id="slideMenu" class="slide-menu">
+  <a href="Masterpage.html">Inicio</a>
+  <a href="Empleados.html">Registro de Empleados</a>
+  <a href="Equipos.html">Registro de Equipos</a>
 
-    <!-- Pie de Página -->
-        <footer class="footer">
-            <p>&copy; 2024 SIEC. Todos los derechos reservados.</p>
-        </footer>
+  <div class="dropdown-title" onclick="toggleSubmenu('actasSubmenu')">Actas de Entrega</div>
+  <div id="actasSubmenu" class="submenu">
+    <a href="ActaEntrega.html">Acta de Entrega</a>
+    <a href="ActaEntregaRenting.html">Renting</a>
+    <a href="ActaEntregaPerifericos.html">Periféricos</a>
+  </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="empleados.js"></script>
-<script src="slideMenu.js"></script>
+  <div class="dropdown-title" onclick="toggleSubmenu('mantenimientosSubmenu')">Mantenimientos</div>
+  <div id="mantenimientosSubmenu" class="submenu">
+    <a href="Cronogramas.html">Cronograma</a>
+    <a href="MatenimientoPreventivo.html">Preventivo</a>
+    <a href="MantenimientoCorrectivo.html">Correctivo</a>
+  </div>
 
-<script script>
-        function toggleMenu() {
-            const slideMenu = document.getElementById('slideMenu');
-            const mainContent = document.querySelector('.main-content');
-            if (slideMenu.style.width === '250px') {
-                slideMenu.style.width = '0';
-                mainContent.style.marginLeft = '0';
-            } else {
-                slideMenu.style.width = '250px';
-                mainContent.style.marginLeft = '250px';
-            }
-        }
+  <a href="Informes.html">Informes</a>
+  <a href="Usuarios.html">Usuarios</a>
+  <a href="Login.html" onclick="logout()">Salir</a>
+</nav>
 
-        function toggleSubmenu(submenuId) {
-            const submenu = document.getElementById(submenuId);
-            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function logout() {
-            // Implementar funcionalidad de logout si es necesario
-        }
-    </script>
+<!-- ---------- Contenido principal ---------- -->
+<div class="main-content">
+  <header class="header d-flex align-items-center justify-content-between px-3">
+    <button class="btn btn-light btn-sm d-md-none" onclick="toggleMenu()">☰</button>
     
+  </header>
+
+  <div class="container mt-4">
+    <div class="row">
+      <!-- -------- Formulario -------- -->
+      <div class="col-lg-4 mb-4">
+        <div class="card card-sm p-3">
+          <h4 class="mb-3">Nuevo Empleado</h4>
+          <form id="userForm">
+            <div class="form-group"><label>Nombre</label><input id="nombre" class="form-control" required></div>
+            <div class="form-group"><label>Apellidos</label><input id="apellidos" class="form-control" required></div>
+            <div class="form-group"><label>Teléfono</label><input id="telefono" class="form-control" required></div>
+            <div class="form-group">
+              <label>Cargo</label>
+              <select id="cargo" class="form-control" required>
+                <option value="">Selecciona…</option>
+                <option>Director Administrativo</option>
+                <option>Programador</option>
+                <!-- …más cargos… -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Área</label>
+              <select id="area" class="form-control" required>
+                <option value="">Selecciona…</option>
+                <option>Sistemas</option>
+                <!-- …más áreas… -->
+              </select>
+            </div>
+            <div class="form-group"><label>Correo</label>
+              <input type="email" id="correo" class="form-control" required></div>
+            <div class="form-group">
+              <label>Empresa</label>
+              <select id="empresa" class="form-control" required>
+                <option value="">Selecciona…</option>
+                <option>Mototransportamos</option>
+                <!-- …más empresas… -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Activo</label>
+              <select id="activo" class="form-control">
+                <option>Si</option><option>No</option>
+              </select>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Agregar</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- -------- Tabla -------- -->
+      <div class="col-lg-8">
+        <div class="card card-sm p-3">
+          <h4 class="mb-3">Lista de Empleados</h4>
+          <div class="table-responsive">
+            <table class="table table-bordered table-sm">
+              <thead class="thead-light">
+                <tr>
+                  <th>ID</th><th>Nombre</th><th>Apellidos</th><th>Teléfono</th>
+                  <th>Cargo</th><th>Área</th><th>Correo</th>
+                  <th>Empresa</th><th>Activo</th><th>Editar</th><th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody id="userTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- Botón global para abrir el modal ---------- -->
+  <div class="text-right px-3 mb-2">
+    <button id="openModal"
+            class="btn btn-info"
+            data-toggle="modal"
+            data-target="#asignarModal">
+      Asignar / Desasignar equipo
+    </button>
+  </div>
+
+  <!-- ---------- Modal Asignar / Desasignar ---------- -->
+  <div class="modal fade" id="asignarModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Asignar / Desasignar equipo</h5>
+        <button class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Empleado</label>
+          <select id="empleadoSelect" class="form-control"></select>
+        </div>
+        <div class="form-group">
+          <label>Equipo (Serie)</label>
+          <select id="equipoSelect" class="form-control"></select>
+        </div>
+        <div class="form-group">
+          <label>Acción</label>
+          <select id="accion" class="form-control">
+            <option>Asignar</option><option>Desasignar</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Observaciones</label>
+          <textarea id="observacion" class="form-control"></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button id="saveAssignment" class="btn btn-primary">Guardar</button>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ---------- Historial ---------- -->
+  <div class="container mb-4">
+    <h4 class="mb-2">Historial de Asignaciones</h4>
+    <table class="table table-bordered table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th>Empleado</th><th>Equipo</th><th>Observación</th>
+          <th>Acción</th><th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="historialAsignaciones"></tbody>
+    </table>
+  </div>
+</div><!-- /main-content -->
+
+<footer class="footer">&copy; 2024 SIEC. Todos los derechos reservados.</footer>
+
+<!-- ---------------- Scripts ---------------- -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="empleados.js"></script>       <!-- tu CRUD de empleados -->
+<script src="asignaciones.js"></script>    <!-- asignar/desasignar -->
+
+<script>
+  /* ---- Slide‑menu helpers ---- */
+  function toggleMenu(){
+    const m=document.getElementById('slideMenu');
+    const main=document.querySelector('.main-content');
+    if(m.style.width==='0px'||!m.style.width){
+      m.style.width='250px';main.style.marginLeft='250px';
+    }else{
+      m.style.width='0';main.style.marginLeft='0';
+    }
+  }
+  function toggleSubmenu(id){
+    const s=document.getElementById(id);
+    s.style.display=s.style.display==='block'?'none':'block';
+  }
+  function logout(){localStorage.clear();location.href='Login.html';}
+</script>
+</body>
 </html>

@@ -37,6 +37,7 @@ $('#userForm').submit(function (event) {
         <td>
           <button class="btn btn-warning btn-sm btn-editar">Editar</button>
           <button class="btn btn-danger  btn-sm btn-eliminar">Eliminar</button>
+          
         </td>
       </tr>
     `);
@@ -133,6 +134,7 @@ $(document).ready(function () {
             <td>
               <button class="btn btn-warning btn-sm btn-editar">Editar</button>
               <button class="btn btn-danger btn-sm btn-eliminar">Eliminar</button>
+              
             </td>
           </tr>
         `);
