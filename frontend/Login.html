@@ -1,75 +1,96 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .login-container {
-            max-width: 400px;
-            margin: 100px auto;
-        }
-        .header {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-        }
-        .header a {
-            color: white;
-        }
-        .login-form {
-            background-color: #f8f9fa;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .footer {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SIEC – Iniciar Sesión</title>
+
+  <!-- Bootstrap 4 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+
+  <!-- Estilos visuales consistentes -->
+  <style>
+    body {
+      background-color: #f0f5ff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .login-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 80px; /* espacio para footer */
+    }
+
+    .login-card {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .login-card h3 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #333;
+    }
+
+    .footer {
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+    }
+
+    .form-control:focus {
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+      border-color: #4CAF50;
+    }
+
+    a.text-primary:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
-<header class="header">
-    <div class="container">
-        <h1>SIEC</h1>
-    </div>
-</header>
-
-<div class="login-container">
-    <form class="login-form" onsubmit="return validateLogin()">
-        <h3 class="text-center">Inicio de Sesión</h3>
+  <!-- Contenedor del formulario -->
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h3>Inicio de Sesión</h3>
+      <form onsubmit="return validateLogin()">
         <div class="form-group">
-            <label for="username">Usuario</label>
-            <input type="text" class="form-control" id="username" placeholder="Ingrese su usuario" required>
+          <label for="username">Usuario</label>
+          <input type="text" class="form-control" id="username" placeholder="Ingrese su usuario" required>
         </div>
         <div class="form-group">
-            <label for="password">Contraseña</label>
-            <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña" required>
-        </div>
-        <div class="form-group text-right">
-            <a href="#" class="text-primary">Olvidé mi contraseña</a>
+          <label for="password">Contraseña</label>
+          <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña" required>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
-    </form>
-</div>
+      </form>
+    </div>
+  </div>
 
-<footer class="footer">
-    <p>&copy; 2024 SIEC. Todos los derechos reservados.</p>
-</footer>
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2024 SIEC. Todos los derechos reservados.
+  </footer>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="login.js"></script>
-
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
