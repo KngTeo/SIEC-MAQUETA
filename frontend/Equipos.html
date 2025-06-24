@@ -158,5 +158,10 @@
     function toggleSubmenu(id){const s=document.getElementById(id);s.style.display=s.style.display==='block'?'none':'block';}
     function logout(){localStorage.clear();location.href='Login.html';}
   </script>
+  <script src="auth.js"></script>
+  <script>
+    verificarPermiso(['Administrador', 'Técnico']);
+  </script>
+
 </body>
 </html>

@@ -34,3 +34,18 @@ function validateLogin() {
 
   return false; // Previene recarga del formulario
 }
+
+if (data.tipoUsuario) {
+  // Guardar en localStorage
+  localStorage.setItem("usuario", JSON.stringify({
+    nombreUsuario: data.nombreUsuario,
+    tipoUsuario: data.tipoUsuario
+  }));
+
+  // Redirigir
+  if (data.tipoUsuario === 'Invitado') {
+    window.location.href = 'Informes.html';
+  } else {
+    window.location.href = 'Masterpage.html';
+  }
+}
