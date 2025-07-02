@@ -93,4 +93,21 @@ router.delete('/:id', (req, res) => {
   });
 });
 
+
+
+/* ------------------------------------------------------------------
+    OBTENER todos los equipos  (GET /api/equipos/cronograma)
+------------------------------------------------------------------ */
+
+router.get('/', (req, res) => {
+  connection.query('SELECT EquipoID, NumeroSerie FROM equipos', (err, results) => {
+    if (err) {
+      console.error('Error al obtener equipos:', err);
+      res.status(500).json({ message: 'Error al obtener equipos' });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 module.exports = router;

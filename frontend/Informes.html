@@ -140,5 +140,14 @@
   });
 </script>
 
+<script type="module">
+  import { buildMenu, guardPage } from './permissions.js';
+  document.addEventListener('DOMContentLoaded', () => {
+    buildMenu();
+    guardPage();
+  });
+</script>
+
+
 </body>
 </html>

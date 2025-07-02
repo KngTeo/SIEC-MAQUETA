@@ -90,5 +90,21 @@ router.get('/', (req, res) => {
   });
 });
 
-module.exports = router;
 
+
+/* ------------------------------------------------------------------
+    OBTENER todos los empleados  (GET /api/empleados/cronograma)
+------------------------------------------------------------------ */
+
+router.get('/', (req, res) => {
+  connection.query('SELECT EmpleadoID, Nombre, Apellido FROM empleados', (err, results) => {
+    if (err) {
+      console.error('Error al obtener empleados:', err);
+      res.status(500).json({ message: 'Error al obtener empleados' });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+module.exports = router;
