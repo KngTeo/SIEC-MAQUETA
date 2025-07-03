@@ -153,36 +153,54 @@
         document.getElementById('btn-generate').setAttribute('disabled','');
       });
 
-    // 5) Generar PDF con html2pdf.js
-    document.getElementById('btn-generate')
-      .addEventListener('click', () => {
-        if (signaturePad.isEmpty()) {
-          return alert('Debe firmar antes de generar el PDF.');
-        }
-        // Incluimos la firma como imagen en el canvas
-        const imgData = signaturePad.toDataURL();
-        // Adjuntamos la firma al documento:
-        const img = new Image();
-        img.src = imgData;
-        img.style.width = '100%';
-        // Antes de generar, insertamos la imagen debajo de la tarjeta:
-        const cont = document.getElementById('actaContainer');
-        cont.appendChild(img);
+// 5) Generar PDF con html2pdf.js
+document.getElementById('btn-generate')
+  .addEventListener('click', () => {
+    if (signaturePad.isEmpty()) {
+      return alert('Debe firmar antes de generar el PDF.');
+    }
+    // Captura la firma como imagen
+    const imgData = signaturePad.toDataURL();
+    const img    = new Image();
+    img.src      = imgData;
+    img.style.width = '100%';
+    const cont   = document.getElementById('actaContainer');
+    cont.appendChild(img);
 
-        // Configuración html2pdf
-        const opt = {
-          margin:       [0.5, 0.5, 0.5, 0.5],
-          filename:     `Acta_${document.getElementById('nroActa').value}.pdf`,
-          image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2 },
-          jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-        // Disparamos la descarga
-        html2pdf().set(opt).from(cont).save().then(() => {
-          // opcional: quitar la firma insertada tras generar
-          cont.removeChild(img);
-        });
+    // Opciones para que quepa en una hoja A4
+    const opt = {
+      margin:       [5, 5, 5, 5],      // márgenes en mm: top, left, bottom, right
+      filename:     `Acta_${document.getElementById('nroActa').value}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        {
+        unit:    'mm',
+        format:  'a4',
+        orientation: 'portrait'
+      },
+      pagebreak: {
+        mode: ['avoid-all', 'css', 'legacy']
+      }
+    };
+
+    // Genera y descarga en una sola página
+    html2pdf()
+      .set(opt)
+      .from(cont)
+      .toPdf()
+      .get('pdf')
+      .then(pdf => {
+        // Forzamos una sola página: 
+        const totalPages = pdf.internal.getNumberOfPages();
+        for (let i = totalPages; i > 1; i--) {
+          pdf.deletePage(i);
+        }
+      })
+      .save()
+      .then(() => {
+        cont.removeChild(img);
       });
+  });
   });
   </script>
 

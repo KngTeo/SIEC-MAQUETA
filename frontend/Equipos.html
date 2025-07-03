@@ -34,8 +34,6 @@
     <div class="dropdown-title" onclick="toggleSubmenu('mntSubmenu')">Mantenimientos</div>
     <div id="mntSubmenu" class="submenu">
       <a href="Cronogramas.html">Cronograma</a>
-      <a href="MatenimientoPreventivo.html">Preventivo</a>
-      <a href="MantenimientoCorrectivo.html">Correctivo</a>
     </div>
     <a href="Informes.html">Informes</a>
     <a href="Usuarios.html">Usuarios</a>
@@ -159,13 +157,7 @@
     function logout(){localStorage.clear();location.href='Login.html';}
   </script>
   
-  <script type="module">
-    import { buildMenu, guardPage } from './permissions.js';
-    document.addEventListener('DOMContentLoaded', () => {
-      buildMenu();
-      guardPage();
-    });
-  </script>
+  <script src="permission.js"></script>
 
 
 

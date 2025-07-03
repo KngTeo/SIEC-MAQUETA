@@ -2,34 +2,49 @@ const express = require('express');
 const router  = express.Router();
 const db      = require('../database');
 
-
-// GET lista empleados
+/**
+ * GET lista de empleados para dropdown
+ *    GET /api/cronogramas/empleados
+ */
 router.get('/empleados', (req, res) => {
   db.query(
     'SELECT EmpleadoID, Nombre, Apellido FROM empleados',
     (err, rows) => {
-      if (err) return res.status(500).json({ message: 'Error al obtener empleados' });
+      if (err) {
+        console.error('Error al obtener empleados:', err);
+        return res.status(500).json({ message: 'Error al obtener empleados' });
+      }
       res.json(rows);
     }
   );
 });
 
-// GET lista equipos
+/**
+ * GET lista de equipos para dropdown
+ *    GET /api/cronogramas/equipos
+ */
 router.get('/equipos', (req, res) => {
   db.query(
-    'SELECT EquipoID, NumeroSerie FROM equipos',
+    'SELECT EquipoID, Empresa, NumeroSerie, TipoEquipo, Modelo, Marca, Usuario AS UsuarioPC FROM equipos',
     (err, rows) => {
-      if (err) return res.status(500).json({ message: 'Error al obtener equipos' });
+      if (err) {
+        console.error('Error al obtener equipos:', err);
+        return res.status(500).json({ message: 'Error al obtener equipos' });
+      }
       res.json(rows);
     }
   );
 });
 
-/* POST: registrar cronograma */
+/**
+ * POST registrar un nuevo cronograma
+ *    POST /api/cronogramas
+ */
 router.post('/', (req, res) => {
   const { EmpleadoID, EquipoID, Fecha, Tipo, Observacion, Estado } = req.body;
-  if (!EmpleadoID||!EquipoID||!Fecha||!Tipo||!Estado)
+  if (!EmpleadoID || !EquipoID || !Fecha || !Tipo || !Estado) {
     return res.status(400).json({ message: 'Faltan campos requeridos' });
+  }
 
   const sql = `
     INSERT INTO cronogramas
@@ -43,18 +58,28 @@ router.post('/', (req, res) => {
         console.error('Error al registrar cronograma:', err);
         return res.status(500).json({ message: 'Error al registrar cronograma' });
       }
-      res.status(201).json({ message: 'Mantenimiento registrado correctamente' });
+      res.status(201).json({
+        message: 'Mantenimiento registrado correctamente',
+        id: result.insertId
+      });
     }
   );
 });
 
-/* GET: listar cronogramas */
+/**
+ * GET todos los cronogramas (para listado)
+ *    GET /api/cronogramas
+ */
 router.get('/', (req, res) => {
   const sql = `
     SELECT
-      c.ID, c.Fecha, c.Tipo, c.Observacion, c.Estado,
+      c.ID,
+      c.Fecha,
+      c.Tipo,
+      c.Observacion,
+      c.Estado,
       CONCAT(e.Nombre,' ',e.Apellido) AS Empleado,
-      eq.NumeroSerie     AS Equipo
+      eq.NumeroSerie AS Equipo
     FROM cronogramas c
     JOIN empleados e ON c.EmpleadoID = e.EmpleadoID
     JOIN equipos   eq ON c.EquipoID   = eq.EquipoID
@@ -69,17 +94,21 @@ router.get('/', (req, res) => {
   });
 });
 
-// PUT actualizar cronograma (cualquier campo)
+/**
+ * PUT actualizar cualquier campo de un cronograma
+ *    PUT /api/cronogramas/:id
+ */
 router.put('/:id', (req, res) => {
   const campos = req.body;
-  const parts = [];
-  const vals  = [];
-  for (let k in campos) {
-    parts.push(`${k} = ?`);
-    vals.push(campos[k]);
+  const keys   = Object.keys(campos);
+  if (keys.length === 0) {
+    return res.status(400).json({ message: 'Ningún campo para actualizar' });
   }
+  const parts = keys.map(k => `${k} = ?`).join(', ');
+  const vals  = keys.map(k => campos[k]);
   vals.push(req.params.id);
-  const sql = `UPDATE cronogramas SET ${parts.join(', ')} WHERE ID = ?`;
+
+  const sql = `UPDATE cronogramas SET ${parts} WHERE ID = ?`;
   db.query(sql, vals, err => {
     if (err) {
       console.error('Error al actualizar cronograma:', err);
@@ -89,22 +118,10 @@ router.put('/:id', (req, res) => {
   });
 });
 
-// routes/cronogramas.js
-router.put('/:id', (req, res) => {
-  const { Estado } = req.body;
-  if (!Estado) return res.status(400).json({ message: 'Estado requerido' });
-
-  const sql = 'UPDATE cronogramas SET Estado = ? WHERE ID = ?';
-  db.query(sql, [Estado, req.params.id], err => {
-    if (err) {
-      console.error('Error al actualizar estado:', err);
-      return res.status(500).json({ message: 'Error al actualizar estado' });
-    }
-    res.json({ message: 'Estado actualizado correctamente' });
-  });
-});
-
-// GET /api/cronogramas/:id — devuelve un solo cronograma con datos de equipo
+/**
+ * GET un solo cronograma por ID (para rellenar formularios Preventivo/Correctivo)
+ *    GET /api/cronogramas/:id
+ */
 router.get('/:id', (req, res) => {
   const sql = `
     SELECT
@@ -113,18 +130,27 @@ router.get('/:id', (req, res) => {
       c.Tipo,
       c.Observacion,
       c.Estado,
+      c.EmpleadoID,
+      c.EquipoID,
+      CONCAT(e.Nombre,' ',e.Apellido)       AS Empleado,
+      eq.Empresa,
       eq.NumeroSerie,
       eq.TipoEquipo,
       eq.Modelo,
-      eq.Marca
+      eq.Marca,
+      eq.Usuario                          AS UsuarioPC
     FROM cronogramas c
-    JOIN equipos   eq ON c.EquipoID = eq.EquipoID
+    JOIN empleados e ON c.EmpleadoID = e.EmpleadoID
+    JOIN equipos   eq ON c.EquipoID   = eq.EquipoID
     WHERE c.ID = ?
   `;
   db.query(sql, [req.params.id], (err, rows) => {
-    if (err || rows.length === 0) {
-      console.error('Error al obtener cronograma:', err);
-      return res.status(500).json({ message: 'No encontrado' });
+    if (err) {
+      console.error('Error al obtener cronograma por ID:', err);
+      return res.status(500).json({ message: 'Error al obtener cronograma' });
+    }
+    if (!rows.length) {
+      return res.status(404).json({ message: 'Cronograma no encontrado' });
     }
     res.json(rows[0]);
   });

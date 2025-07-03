@@ -55,8 +55,6 @@
     <div class="dropdown-title" onclick="toggleSubmenu('mantenimientosSubmenu')">Mantenimientos</div>
     <div id="mantenimientosSubmenu" class="submenu">
       <a href="Cronogramas.html">Cronograma</a>
-      <a href="MatenimientoPreventivo.html">Preventivo</a>
-      <a href="MantenimientoCorrectivo.html">Correctivo</a>
     </div>
     <a href="Informes.html">Informes</a>
     <a href="Usuarios.html">Usuarios</a>
@@ -147,13 +145,7 @@
     }
   </script>
 
-  <script type="module">
-  import { buildMenu, guardPage } from './permissions.js';
-  document.addEventListener('DOMContentLoaded', () => {
-    buildMenu();
-    guardPage();
-  });
-</script>
+  <script src="permission.js"></script>
 
 
 
