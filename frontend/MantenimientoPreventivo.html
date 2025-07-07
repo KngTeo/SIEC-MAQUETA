@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mantenimiento Preventivo</title>
+
+  <!-- Bootstrap + Shared CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles/actas.css"/>
+
+  <!-- html2canvas, jsPDF, SignaturePad -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+</head>
+<body>
+  <nav id="slideMenu" class="slide-menu">
+    <span class="close-btn" onclick="toggleMenu()">&times;</span>
+    <a href="Masterpage.html">Inicio</a>
+    <a href="Empleados.html">Registro de Empleados</a>
+    <a href="Equipos.html">Registro de Equipos</a>
+    <div class="dropdown-title" onclick="toggleSubmenu('actasSubmenu')">Actas de Entrega</div>
+    <div id="actasSubmenu" class="submenu">
+      <a href="ActaEntrega.html">Acta de Entrega</a>
+      <a href="ActaEntregaRenting.html">Renting</a>
+      <a href="ActaEntregaPerifericos.html">Periféricos</a>
+    </div>
+    <div class="dropdown-title" onclick="toggleSubmenu('mantenimientosSubmenu')">Mantenimientos</div>
+    <div id="mantenimientosSubmenu" class="submenu">
+      <a href="Cronogramas.html">Cronograma</a>
+      
+    </div>
+    <a href="Informes.html">Informes</a>
+    <a href="Usuarios.html">Usuarios</a>
+    <a href="Login.html" onclick="logout()">Salir</a>
+  </nav>
+
+  <div class="main-content">
+    <header class="header">
+      <button class="open-menu-btn" onclick="toggleMenu()">☰</button>
+      <h1>SIEC</h1>
+    </header>
+
+    <div id="pdfContent" class="form-container">
+      <div class="header-section text-center mb-4">
+        <h4>Mantenimiento Preventivo</h4>
+      </div>
+      <div class="card-body p-0">
+
+        <!-- Info general -->
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label>Nro. Acta</label>
+            <input id="nroActa" class="form-control" readonly>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Fecha</label>
+            <input id="fechaActa" type="date" class="form-control" readonly>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Empresa</label>
+            <input id="empresaPreventivo" class="form-control" readonly>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Serial Equipo</label>
+            <input id="seriePreventivo" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Tipo de Equipo</label>
+            <input id="tipoEquipoPreventivo" class="form-control" readonly>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Responsable Técnico</label>
+            <input id="responsablePreventivo" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Usuario PC</label>
+          <input id="usuarioPCPreventivo" class="form-control" readonly>
+        </div>
+
+        <!-- Actividades Desarrolladas -->
+        <div class="section-title">Actividades Desarrolladas</div>
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm text-center">
+            <thead class="thead-light">
+              <tr>
+                <th>Mantenimiento</th>
+                <th>Descripción</th>
+                <th>&#10004;</th>
+                <th>&#10006;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Limpieza del gabinete</td>
+                <td>Apagar PC, desconectar y soplar aire comprimido o sopladora.</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+              </tr>
+              <tr>
+                <td>Limpieza de componentes</td>
+                <td>Retirar y limpiar polvo de ventiladores, tarjetas de video, etc.</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+              </tr>
+              <tr>
+                <td>Limpieza de puertos y conectores</td>
+                <td>Usar aire comprimido para limpiar puertos y conectores.</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+              </tr>
+              <tr>
+                <td>Liberar espacio en disco</td>
+                <td>Eliminar temporales, vaciar papelera y desinstalar no usados.</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+              </tr>
+              <tr>
+                <td>Actualizar software</td>
+                <td>Instalar actualizaciones OS, drivers y programas.</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+              </tr>
+              <tr>
+                <td>Copias de seguridad</td>
+                <td>Respaldar archivos en disco externo o nube.</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+              </tr>
+              <tr>
+                <td>Eliminar software malicioso</td>
+                <td>Escanear con antivirus actualizado y eliminar amenazas.</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+              </tr>
+              <tr>
+                <td>Desfragmentar disco duro</td>
+                <td>Optimizar espacio en disco para mejorar rendimiento.</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+              </tr>
+              <tr>
+                <td>Revisar programas de inicio</td>
+                <td>Deshabilitar programas que inician con el sistema.</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Observaciones -->
+        <div class="form-group">
+          <label>Observaciones Programadas</label>
+          <textarea id="obsProgramadaPreventivo" class="form-control" rows="2" readonly></textarea>
+        </div>
+
+        <!-- Firma -->
+        <div class="form-group">
+          <label>Firma Digital</label>
+          <canvas id="signature-pad-preventivo" class="border w-100" style="height:150px"></canvas>
+          <button id="clear-sign-preventivo" class="btn btn-secondary btn-sm mt-2">Limpiar Firma</button>
+        </div>
+
+        <!-- Revisa y Aprueba -->
+        <div class="section-title">Revisa y Aprueba</div>
+        <table class="table table-bordered table-sm">
+          <tr>
+            <th>Usuario PC</th>
+            <td id="revUsuarioPC"></td>
+            <th>Revisa y Aprueba</th>
+            <td>Mateo Ramírez</td>
+          </tr>
+          <tr>
+            <th>Cargo</th>
+            <td colspan="3">Director de Sistemas e Informática</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Generar PDF -->
+    <div class="text-right my-3">
+      <button id="btn-generate-preventivo" class="btn btn-success" disabled>
+        Generar Acta (PDF)
+      </button>
+    </div>
+
+    <div class="footer-section">© 2024 SIEC WEB. Todos los derechos reservados.</div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script src="frontend/mantenimientos.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Inicializa formulario
+      const params = new URLSearchParams(location.search);
+      const id     = params.get('id');
+      if (!id) return alert('Falta ID de cronograma');
+
+      // Referencias
+      const nroActa   = document.getElementById('nroActa');
+      const fechaActa = document.getElementById('fechaActa');
+      const empInput  = document.getElementById('empresaPreventivo');
+      const serInput  = document.getElementById('seriePreventivo');
+      const tipoIn    = document.getElementById('tipoEquipoPreventivo');
+      const respIn    = document.getElementById('responsablePreventivo');
+      const userPC    = document.getElementById('usuarioPCPreventivo');
+      const revPC     = document.getElementById('revUsuarioPC');
+      const obsProg   = document.getElementById('obsProgramadaPreventivo');
+      const btnGen    = document.getElementById('btn-generate-preventivo');
+      const pad       = new SignaturePad(document.getElementById('signature-pad-preventivo'));
+
+      nroActa.value   = '1';
+      fechaActa.value = new Date().toISOString().slice(0,10);
+      try {
+        const u = JSON.parse(localStorage.getItem('usuario')||'{}');
+        if (u.nombreUsuario) respIn.value = u.nombreUsuario;
+      } catch{}
+
+      // Carga datos
+      fetch(`http://localhost:3000/api/cronogramas/${id}`)
+        .then(r => r.ok? r.json(): Promise.reject())
+        .then(d => {
+          empInput.value  = d.Empresa;
+          serInput.value  = d.NumeroSerie;
+          tipoIn.value    = d.TipoEquipo;
+          userPC.value    = d.UsuarioPC;
+          revPC.textContent = d.UsuarioPC;
+          obsProg.value   = d.Observacion||'';
+          if (d.Estado==='Realizado') btnGen.removeAttribute('disabled');
+        })
+        .catch(()=>alert('Error cargando cronograma'));
+
+      document.getElementById('clear-sign-preventivo').onclick = () => {
+        pad.clear();
+        btnGen.setAttribute('disabled','');
+      };
+      pad.onEnd = () => {
+        if (!pad.isEmpty()) btnGen.removeAttribute('disabled');
+      };
+
+      // Generar PDF
+      btnGen.onclick = async () => {
+        if (pad.isEmpty()) return alert('Debe firmar antes');
+        const el = document.getElementById('pdfContent');
+        const canvas = await html2canvas(el,{ scale:2 });
+        const img = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          unit: 'px',
+          format:[canvas.width,canvas.height]
+        });
+        pdf.addImage(img,'PNG',0,0,canvas.width,canvas.height);
+        pdf.save(`Preventivo_${nroActa.value}.pdf`);
+      };
+    });
+
+    // Layout helpers
+    function toggleMenu(){
+      const m=document.getElementById('slideMenu'), main=document.querySelector('.main-content');
+      if(m.style.width==='250px'){m.style.width='0';main.style.marginLeft='0';}
+      else {m.style.width='250px';main.style.marginLeft='250px';}
+    }
+    function toggleSubmenu(id){
+      const s=document.getElementById(id);
+      s.style.display=s.style.display==='block'?'none':'block';
+    }
+    function logout(){
+      localStorage.clear();
+      location.href='Login.html';
+    }
+  </script>
+</body>
+</html>

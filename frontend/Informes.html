@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SIEC – Informes</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+  <style>
+    body { overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; background: #f0f5ff }
+    .main-content { flex: 1; margin-left: 250px; padding: 30px; padding-bottom: 90px }
+    .slide-menu {
+      height: 100%; width: 250px; position: fixed; top: 0; left: 0;
+      background: #d9e2ef; color: #333; padding-top: 60px; overflow-y: auto; z-index: 1000;
+    }
+    .slide-menu a { display: block; padding: 12px 20px; text-decoration: none; color: #333 }
+    .slide-menu a:hover, .slide-menu .dropdown-title:hover { background: #ccc }
+    .slide-menu .dropdown-title { padding: 12px 20px; font-weight: 600; cursor: pointer }
+    .submenu { display: none; padding-left: 15px }
+    .footer {
+      background: #4CAF50; color: white; text-align: center;
+      padding: 10px 0; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 999;
+    }
+    .card-sm { border-radius: 12px; box-shadow: 0 0 6px rgba(0,0,0,.1) }
+    @media (max-width: 767px) {
+      .slide-menu { width: 0 }
+      .main-content { margin-left: 0 }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ▸ Menú lateral -->
+<nav id="slideMenu" class="slide-menu">
+  <a href="Masterpage.html">Inicio</a>
+  <a href="Empleados.html">Registro de Empleados</a>
+  <a href="Equipos.html">Registro de Equipos</a>
+  <div class="dropdown-title" onclick="toggleSubmenu('actasSubmenu')">Actas de Entrega</div>
+  <div id="actasSubmenu" class="submenu">
+    <a href="ActaEntrega.html">Acta de Entrega</a>
+    <a href="ActaEntregaRenting.html">Renting</a>
+    <a href="ActaEntregaPerifericos.html">Periféricos</a>
+  </div>
+  <div class="dropdown-title" onclick="toggleSubmenu('mntSubmenu')">Mantenimientos</div>
+  <div id="mntSubmenu" class="submenu">
+    <a href="Cronogramas.html">Cronograma</a>
+    
+  </div>
+  <a href="Informes.html">Informes</a>
+  <a href="Usuarios.html">Usuarios</a>
+  <a href="Login.html" onclick="logout()">Salir</a>
+</nav>
+
+<!-- ▸ Contenido principal -->
+<div class="main-content">
+  <div class="container">
+    <div class="card card-sm p-4 mb-4">
+      <h4 class="mb-3">Generar Informes</h4>
+      <form id="formInforme">
+        <!-- ▸ Selección de tipo de informe -->
+        <div class="form-group">
+          <label for="tipoInforme">Tipo de Informe</label>
+          <select class="form-control" id="tipoInforme" required>
+            <option value="">Seleccione...</option>
+            <option value="empleados">Empleados</option>
+            <option value="equipos">Equipos</option>
+            
+          </select>
+        </div>
+
+        <!-- ▸ Fecha inicial y final (opcional) -->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="fechaInicio">Desde</label>
+            <input type="date" class="form-control" id="fechaInicio">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="fechaFin">Hasta</label>
+            <input type="date" class="form-control" id="fechaFin">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Generar Informe</button>
+      </form>
+    </div>
+
+    <!-- ▸ Resultados -->
+    <div class="card card-sm p-3">
+      <h5 class="mb-3">Resultados</h5>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+          <thead id="informeHeader" class="thead-light"></thead>
+          <tbody id="informeBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ▸ Footer -->
+<footer class="footer">&copy; 2024 SIEC. Todos los derechos reservados.</footer>
+
+<!-- ▸ Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="informes.js"></script>
+<script type="module">
+  import { buildMenu, guardPage } from './permissions.js';
+  document.addEventListener('DOMContentLoaded', () => {
+    buildMenu();
+    guardPage();
+  });
+</script>
+
+
+</body>
+</html>

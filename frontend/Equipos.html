@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIEC – Registro de Equipos</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <style>
+    /* Layout general */
+    body { overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; background: #f0f5ff; }
+    .main-content { flex: 1; margin-left: 250px; padding-bottom: 60px; }
+    .slide-menu { height: 100%; width: 250px; position: fixed; top: 0; left: 0; background: #d9e2ef; color: #333; padding-top: 60px; overflow-y: auto; }
+    .slide-menu a, .slide-menu .dropdown-title { display: block; padding: 12px 20px; text-decoration: none; color: #333; cursor: pointer; }
+    .slide-menu a:hover, .slide-menu .dropdown-title:hover { background: #ccc; }
+    .submenu { display: none; padding-left: 15px; }
+    .header { position: sticky; top: 0; z-index: 1001; background: #4caf50; color: white; padding: 10px; }
+    .footer { background: #4caf50; color: #fff; text-align: center; padding: 10px 0; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 999; }
+    .card-sm { border-radius: 12px; box-shadow: 0 0 6px rgba(0,0,0,.1); }
+    @media(max-width:767px) { .slide-menu { width: 0; } .main-content { margin-left: 0; } }
+  </style>
+</head>
+<body>
+  <nav id="slideMenu" class="slide-menu">
+    <a href="Masterpage.html">Inicio</a>
+    <a href="Empleados.html">Registro de Empleados</a>
+    <a href="Equipos.html">Registro de Equipos</a>
+    <div class="dropdown-title" onclick="toggleSubmenu('actasSubmenu')">Actas de Entrega</div>
+    <div id="actasSubmenu" class="submenu">
+      <a href="ActaEntrega.html">Acta de Entrega</a>
+      <a href="ActaEntregaRenting.html">Renting</a>
+      <a href="ActaEntregaPerifericos.html">Periféricos</a>
+    </div>
+    <div class="dropdown-title" onclick="toggleSubmenu('mantenimientosSubmenu')">Mantenimientos</div>
+    <div id="mantenimientosSubmenu" class="submenu">
+      <a href="Cronogramas.html">Cronograma</a>
+    </div>
+    <a href="Informes.html">Informes</a>
+    <a href="Usuarios.html">Usuarios</a>
+    <a href="Login.html" onclick="logout()">Salir</a>
+  </nav>
+
+  <div class="main-content">
+    <header class="header d-flex align-items-center justify-content-between px-3">
+      <button class="btn btn-light btn-sm d-md-none" onclick="toggleMenu()">☰</button>
+      <h1 class="h5 m-0">Registro de Equipos</h1>
+    </header>
+
+    <div class="container mt-4">
+      <div class="row">
+        <!-- ▸ FORMULARIO ------------------------------- -->
+        <div class="col-lg-4 mb-4">
+          <div class="card card-sm p-3">
+            <h4 class="mb-3">Nuevo Equipo</h4>
+            <form id="equipmentForm">
+              <!-- Empresa -->
+              <div class="form-group"><label>Empresa</label>
+                <select id="empresa" class="form-control" required>
+                  <option value="">Selecciona…</option>
+                  <optgroup label="Transporte y Logística">
+                    <option>Mototransportamos</option><option>Refrilogistica</option><option>Cefatrans</option>
+                  </optgroup>
+                  <optgroup label="Servicios">
+                    <option>Motoseguridad</option><option>Tramitar Seguros</option><option>Labor Health IPS</option><option>Utciant</option>
+                  </optgroup>
+                  <optgroup label="Otras">
+                    <option>Cia Capri</option><option>Funcionarios Team</option>
+                  </optgroup>
+                </select>
+              </div>
+              <!-- Serial & Tipo -->
+              <div class="form-row">
+                <div class="form-group col-6"><label>N.º Serie</label><input id="numserie" class="form-control" required></div>
+                <div class="form-group col-6"><label>Tipo</label>
+                  <select id="tipoEquipo" class="form-control" required>
+                    <option value="">Selecciona…</option><option>Portátil</option><option>Desktop</option><option>Torre</option><option>Servidor</option><option>Pantalla Colaborativa</option><option>Tablet PC</option>
+                  </select>
+                </div>
+              </div>
+              <!-- Modelo & Marca -->
+              <div class="form-row">
+                <div class="form-group col-6"><label>Modelo</label><input id="modelo" class="form-control" required></div>
+                <div class="form-group col-6"><label>Marca</label>
+                  <select id="marca" class="form-control" required>
+                    <option value="">Selecciona…</option><option>HP</option><option>Dell</option><option>Lenovo</option><option>Acer</option><option>Apple</option>
+                  </select>
+                </div>
+              </div>
+              <!-- Specs -->
+              <div class="form-row">
+                <div class="form-group col-6"><label>Procesador</label><input id="procesador" class="form-control" required></div>
+                <div class="form-group col-3"><label>RAM</label><input id="ram" class="form-control" placeholder="8 GB" required></div>
+                <div class="form-group col-3"><label>Disco</label>
+                  <select id="tipodisco" class="form-control" required><option>SSD</option><option>HDD</option></select>
+                </div>
+              </div>
+              <div class="form-group"><label>Tamaño Disco</label>
+                <select id="tamañodisco" class="form-control" required>
+                  <option value="">Selecciona…</option><option>120 GB</option><option>240 GB</option><option>480 GB</option><option>500 GB</option><option>1 TB</option><option>2 TB</option>
+                </select>
+              </div>
+              <!-- Otros -->
+              <div class="form-row">
+                <div class="form-group col-6"><label>MAC</label><input id="mac" class="form-control" required></div>
+                <div class="form-group col-6"><label>OS</label>
+                  <select id="os" class="form-control" required>
+                    <option value="">Selecciona…</option><option>Windows 11</option><option>Windows 10</option><option>Windows 8.1</option><option>Windows 8</option><option>Windows Server 2022</option><option>Windows Server 2019</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-6"><label>Office</label><input id="office" class="form-control" required></div>
+                <div class="form-group col-6"><label>Antivirus</label>
+                  <select id="antivirus" class="form-control" required><option>Defender</option><option>Escan</option><option>McAfee</option><option>N/A</option></select>
+                </div>
+              </div>
+              <div class="form-group"><label>Estado</label>
+                <select id="estado" class="form-control" required><option>Activo</option><option>Inactivo</option><option>Reparación</option><option>Baja</option></select>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-6"><label>Usuario SO</label><input id="usuario" class="form-control" required></div>
+                <div class="form-group col-6"><label>Contraseña SO</label><input id="contrasena" class="form-control" required></div>
+              </div>
+              <div class="form-group"><label>Observaciones</label><textarea id="observacion" class="form-control" rows="2"></textarea></div>
+              <div class="form-group"><label>Foto del equipo</label><input type="file" id="foto" class="form-control-file"></div>
+
+              <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ▸ TABLA -->
+        <div class="col-lg-8">
+          <div class="card card-sm p-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="mb-0">Lista de Equipos</h4>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-sm">
+                <thead class="thead-light text-center">
+                  <tr>
+                    <th>ID</th><th>Empresa</th><th>Serial</th><th>Tipo</th><th>Modelo</th><th>Marca</th><th>CPU</th><th>RAM</th><th>Disco</th><th>MAC</th><th>OS</th><th>Office</th><th>AV</th><th>Estado</th><th>Usuario</th><th>Contraseña</th><th>Obs.</th><th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="equipmentTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">&copy; 2024 SIEC. Todos los derechos reservados.</footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script src="equipos.js"></script>
+  <script src="asignaciones.js"></script>
+  <script>
+    function toggleMenu() {
+      const m = document.getElementById('slideMenu'),
+            main = document.querySelector('.main-content');
+      if (!m.style.width || m.style.width === '0px') {
+        m.style.width = '250px';
+        main.style.marginLeft = '250px';
+      } else {
+        m.style.width = '0';
+        main.style.marginLeft = '0';
+      }
+    }
+    function toggleSubmenu(id) {
+      const s = document.getElementById(id);
+      s.style.display = s.style.display === 'block' ? 'none' : 'block';
+    }
+    function logout() {
+      localStorage.clear();
+      location.href = 'Login.html';
+    }
+  </script>
+  <script src="permission.js"></script>
+</body>
+</html>

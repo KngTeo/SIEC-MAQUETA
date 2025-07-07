@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="pdfkit-page-size" content="A4" />
+  <title>Acta de Entrega Equipos de Cómputo</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <!-- Estilos comunes de actas -->
+  <link rel="stylesheet" href="styles/actas.css" />
+</head>
+<body>
+  <!-- Menú Lateral -->
+  <div id="slideMenu" class="slide-menu">
+    <span class="close-btn" onclick="toggleMenu()">&times;</span>
+    <a href="Masterpage.html">Inicio</a>
+    <a href="Empleados.html">Registro de Empleados</a>
+    <a href="Equipos.html">Registro de Equipos</a>
+    <div class="dropdown-title" onclick="toggleSubmenu('actasSubmenu')">Actas de Entrega</div>
+      <div id="actasSubmenu" class="submenu">
+        <a href="ActaEntrega.html">Acta de Entrega</a>
+        <a href="ActaEntregaRenting.html">Acta de Entrega Renting</a>
+        <a href="ActaEntregaPerifericos.html">Acta de Entrega Periféricos</a>
+      </div>
+    <div class="dropdown-title" onclick="toggleSubmenu('mantenimientosSubmenu')">Mantenimientos</div>
+      <div id="mantenimientosSubmenu" class="submenu">
+        <a href="Cronogramas.html">Cronograma</a>
+        
+      </div>
+    <a href="Informes.html">Informes</a>
+    <a href="Usuarios.html">Usuarios</a>
+    <a href="Login.html" onclick="logout()">Salir</a>
+  </div>
+
+  <!-- Contenido Principal -->
+  <div class="main-content">
+    <header class="header">
+      <button class="open-menu-btn" onclick="toggleMenu()">☰</button>
+      <h1>SIEC</h1>
+    </header>
+
+    <!-- ESTE es el contenedor que se convierte en PDF -->
+    <div id="actaContainer" class="form-container">
+      <div class="header-section text-center mb-4">
+        <h4>Acta de Entrega Equipos de Cómputo</h4>
+        <p>Código: FOEI-0032 | Fecha: 13/10/2021 | Versión: 1</p>
+      </div>
+
+      <form id="actaForm">
+        <!-- Datos Generales -->
+        <div class="section-title">Datos Generales</div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" class="form-control" value="2024-12-11" required />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="acta">Nro. Acta</label>
+            <input type="text" id="acta" class="form-control" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="empresa">Empresa</label>
+          <input type="text" id="empresa" class="form-control" required />
+        </div>
+
+        <!-- Información del Empleado -->
+        <div class="section-title">Datos del Empleado</div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="cedula">Cédula</label>
+            <input type="text" id="cedula" class="form-control" required />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="apellidos">Apellidos</label>
+            <input type="text" id="apellidos" class="form-control" readonly />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" class="form-control" readonly />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" class="form-control" readonly />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="cargo">Cargo</label>
+            <input type="text" id="cargo" class="form-control" readonly />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="area">Área/Departamento</label>
+            <input type="text" id="area" class="form-control" readonly />
+          </div>
+        </div>
+
+        <!-- Características del Equipo -->
+        <div class="section-title">Características del Equipo</div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="id-equipo">Serial (ID)</label>
+            <input type="text" id="id-equipo" class="form-control" required />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="tipo-equipo">Tipo de Equipo</label>
+            <input type="text" id="tipo-equipo" class="form-control" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="sistemaOperativo">Sistema Operativo</label>
+            <input type="text" id="sistemaOperativo" class="form-control" required />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="marca">Marca</label>
+            <input type="text" id="marca" class="form-control" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="modelo">Modelo</label>
+            <input type="text" id="modelo" class="form-control" required />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="procesador">Procesador</label>
+            <input type="text" id="procesador" class="form-control" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="memoriaRam">Memoria RAM</label>
+            <input type="text" id="memoriaRam" class="form-control" required />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="tipoDisco">Tipo Disco</label>
+            <input type="text" id="tipoDisco" class="form-control" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="tamanoDisco">Tamaño Disco</label>
+            <input type="text" id="tamanoDisco" class="form-control" required />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="dirMac">Dirección MAC</label>
+            <input type="text" id="dirMac" class="form-control" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="observacion">Observación</label>
+          <textarea id="observacion" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="form-group text-center mt-4">
+          <button type="submit" class="btn btn-primary">Guardar Acta</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Botón de PDF -->
+    <div class="text-center my-4">
+      <button id="btnDownloadPDF" class="btn btn-success">
+        Generar Acta (PDF)
+      </button>
+    </div>
+
+    <div class="footer-section">© 2024 SIEC WEB. Todos los derechos reservados.</div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    // Autocompletar Empleado
+    $('#cedula').on('blur', function() {
+      const ced = $(this).val().trim();
+      if (!ced) return;
+      $.getJSON(`http://localhost:3000/api/empleados/cedula/${ced}`)
+        .done(emp => {
+          $('#nombre').val(emp.Nombre);
+          $('#apellidos').val(emp.Apellido);
+          $('#correo').val(emp.Correo);
+          $('#cargo').val(emp.Cargo);
+          $('#area').val(emp.Area);
+          $('#empresa').val(emp.Empresa);
+        })
+        .fail(xhr => {
+          alert(xhr.status === 404
+            ? 'Empleado no encontrado'
+            : 'Error al buscar empleado');
+        });
+    });
+
+    // Autocompletar Equipo
+    $('#id-equipo').on('blur', function() {
+      const s = $(this).val().trim();
+      if (!s) return;
+      $.getJSON(`http://localhost:3000/api/equipos/serial/${s}`)
+        .done(eq => {
+          $('#tipo-equipo').val(eq.TipoEquipo);
+          $('#sistemaOperativo').val(eq.SistemaOperativo);
+          $('#marca').val(eq.Marca);
+          $('#modelo').val(eq.Modelo);
+          $('#procesador').val(eq.Procesador);
+          $('#memoriaRam').val(eq.RAM);
+          $('#tipoDisco').val(eq.TipoDisco);
+          $('#tamanoDisco').val(eq.TamanoDisco);
+          $('#dirMac').val(eq.Mac);
+        })
+        .fail(() => alert('Equipo no encontrado'));
+    });
+
+    // Menú lateral
+    function toggleMenu(){
+      const m = document.getElementById('slideMenu'),
+            main = document.querySelector('.main-content');
+      if (m.style.width === '250px') {
+        m.style.width = '0'; main.style.marginLeft = '0';
+      } else {
+        m.style.width = '250px'; main.style.marginLeft = '250px';
+      }
+    }
+    function toggleSubmenu(id){
+      const s = document.getElementById(id);
+      s.style.display = s.style.display==='block'?'none':'block';
+    }
+    function logout(){
+      localStorage.clear();
+      location.href='Login.html';
+    }
+
+    // Generar PDF
+    document.getElementById('btnDownloadPDF').addEventListener('click', () => {
+      html2pdf().set({
+        margin:    [5,5,5,5],
+        filename:  `ActaEntrega_${$('#acta').val()||'sinNum'}.pdf`,
+        image:     { type:'jpeg', quality:0.98 },
+        html2canvas:{ scale:2, scrollY:0 },
+        jsPDF:     { unit:'mm', format:'a4', orientation:'portrait' },
+        pagebreak: { mode:['css','legacy'] }
+      }).from($('#actaContainer')[0]).save();
+    });
+  </script>
+</body>
+</html>

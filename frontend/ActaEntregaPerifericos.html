@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Acta de Entrega de Periféricos</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <!-- Estilos comunes de actas -->
+  <link rel="stylesheet" href="styles/actas.css"/>
+</head>
+<body>
+  <!-- Menú Lateral -->
+  <div id="slideMenu" class="slide-menu">
+    <span class="close-btn" onclick="toggleMenu()">&times;</span>
+    <a href="Masterpage.html">Inicio</a>
+    <a href="Empleados.html">Registro de Empleados</a>
+    <a href="Equipos.html">Registro de Equipos</a>
+    <div class="dropdown-title" onclick="toggleSubmenu('actasSubmenu')">Actas de Entrega</div>
+      <div id="actasSubmenu" class="submenu">
+        <a href="ActaEntrega.html">Acta de Entrega</a>
+        <a href="ActaEntregaRenting.html">Acta de Entrega Renting</a>
+        <a href="ActaEntregaPerifericos.html">Acta de Entrega Periféricos</a>
+      </div>
+    <div class="dropdown-title" onclick="toggleSubmenu('mantenimientosSubmenu')">Mantenimientos</div>
+      <div id="mantenimientosSubmenu" class="submenu">
+        <a href="Cronogramas.html">Cronograma</a>
+        
+      </div>
+    <a href="Informes.html">Informes</a>
+    <a href="Usuarios.html">Usuarios</a>
+    <a href="Login.html" onclick="logout()">Salir</a>
+  </div>
+
+  <!-- Contenido Principal -->
+  <div class="main-content">
+    <header class="header">
+      <button class="open-menu-btn" onclick="toggleMenu()">☰</button>
+      <h1>SIEC</h1>
+    </header>
+
+    <!-- Este contenedor se convierte en PDF -->
+    <div id="actaContainer" class="form-container">
+      <div class="header-section text-center mb-4">
+        <h4>Acta de Entrega de Periféricos</h4>
+        <p>Código: FOEI-0033 | Versión: 1</p>
+      </div>
+
+      <form id="peripheralForm">
+        <!-- Información del Empleado -->
+        <div class="section-title">Información del Empleado</div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="cedula">Cédula</label>
+            <input type="text" id="cedula" class="form-control" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="cargo">Cargo</label>
+            <input type="text" id="cargo" class="form-control" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="area">Área/Departamento</label>
+            <input type="text" id="area" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="agencia">Agencia</label>
+          <input type="text" id="agencia" class="form-control" required>
+        </div>
+
+        <!-- Características del Equipo -->
+        <div class="section-title">Características del Equipo</div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="idEquipo">ID Equipo - Serial</label>
+            <input type="text" id="idEquipo" class="form-control" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="tipoEquipo">Tipo de Equipo</label>
+            <input type="text" id="tipoEquipo" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="modelo">Modelo</label>
+            <input type="text" id="modelo" class="form-control" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="marca">Marca</label>
+            <input type="text" id="marca" class="form-control" required>
+          </div>
+        </div>
+
+        <!-- Observaciones -->
+        <div class="form-group">
+          <label for="observacion">Observación</label>
+          <textarea id="observacion" class="form-control" rows="3"></textarea>
+        </div>
+      </form>
+    </div>
+
+    <!-- Botón de generación PDF -->
+    <div class="text-center my-4">
+      <button id="btnDownloadPDF" class="btn btn-success">
+        Generar Acta (PDF)
+      </button>
+    </div>
+
+    <div class="footer-section">© 2024 SIEC WEB. Todos los derechos reservados.</div>
+  </div>
+
+  <!-- Scripts: jQuery, Bootstrap, html2pdf.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    // Autocompletar empleado
+    $('#cedula').on('blur', function() {
+      const ced = $(this).val().trim();
+      if (!ced) return;
+      $.getJSON(`http://localhost:3000/api/empleados/cedula/${ced}`)
+        .done(emp => {
+          $('#nombre').val(emp.Nombre);
+          $('#cargo').val(emp.Cargo);
+          $('#area').val(emp.Area);
+          $('#agencia').val(emp.Empresa);
+        })
+        .fail(() => alert('Empleado no encontrado'));
+    });
+    // Autocompletar equipo
+    $('#idEquipo').on('blur', function() {
+      const s = $(this).val().trim();
+      if (!s) return;
+      $.getJSON(`http://localhost:3000/api/equipos/serial/${s}`)
+        .done(eq => {
+          $('#tipoEquipo').val(eq.TipoEquipo);
+          $('#modelo').val(eq.Modelo);
+          $('#marca').val(eq.Marca);
+        })
+        .fail(() => alert('Equipo no encontrado'));
+    });
+    // Menú lateral
+    function toggleMenu() {
+      const m = document.getElementById('slideMenu'),
+            main = document.querySelector('.main-content');
+      if (m.style.width === '250px') {
+        m.style.width = '0'; main.style.marginLeft = '0';
+      } else {
+        m.style.width = '250px'; main.style.marginLeft = '250px';
+      }
+    }
+    function toggleSubmenu(id) {
+      const s = document.getElementById(id);
+      s.style.display = s.style.display==='block'?'none':'block';
+    }
+    function logout() {
+      localStorage.clear(); location.href='Login.html';
+    }
+    // Generar PDF
+    document.getElementById('btnDownloadPDF')
+      .addEventListener('click', () => {
+        const element = document.getElementById('actaContainer');
+        html2pdf().set({
+          margin:    [5,5,5,5],
+          filename:  `ActaPerifericos_${Date.now()}.pdf`,
+          image:     { type:'jpeg', quality:0.98 },
+          html2canvas:{ scale:2, scrollY:0 },
+          jsPDF:     { unit:'mm', format:'a4', orientation:'portrait' },
+          pagebreak: { mode:['css','legacy'] }
+        }).from(element).save();
+      });
+  </script>
+</body>
+</html>

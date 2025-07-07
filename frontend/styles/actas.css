@@ -1,0 +1,153 @@
+/* Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+body {
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f0f5ff;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+/* Slide-menu */
+.slide-menu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0; left: 0;
+  background-color: #d9e2ef;
+  color: #333;
+  overflow-x: hidden;
+  transition: width 0.3s;
+  padding-top: 60px;
+  z-index: 1000;
+}
+.slide-menu .close-btn {
+  position: absolute; top: 20px; right: 20px;
+  font-size: 24px; color: white; cursor: pointer;
+}
+.slide-menu a,
+.slide-menu .dropdown-title {
+  padding: 10px 20px;
+  font-size: 18px;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  transition: background-color .2s;
+  cursor: pointer;
+}
+.slide-menu a:hover,
+.slide-menu .dropdown-title:hover {
+  background-color: #cccccc;
+}
+.slide-menu .submenu {
+  display: none;
+  margin-left: 15px;
+}
+.slide-menu .submenu a {
+  font-size: 16px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  position: relative;
+}
+.header h1 {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.open-menu-btn {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Main wrapper */
+.main-content {
+  flex: 1;
+  transition: margin-left .3s;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0;
+}
+
+/* Form container (y PDF) */
+.form-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,.1);
+  border: 2px solid #4caf50;
+  margin: 20px auto;
+  /* Ancho carta A4 menos márgenes */
+  max-width: 180mm;
+  width: 100%;
+}
+
+/* Section titles */
+.section-title {
+  font-weight: bold;
+  text-decoration: underline;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Footer */
+.footer-section {
+  text-align: center;
+  padding: 15px;
+  background-color: #4caf50;
+  color: white;
+  margin-top: auto;
+}
+
+/* Evitar cortes malos */
+.form-row,
+.form-group,
+.section-title {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Print-only: ocultar todo excepto el contenedor del acta */
+@media print {
+  @page { size: A4; margin: 5mm; }
+  body * { visibility: hidden; }
+  #actaContainer, #actaContainer * {
+    visibility: visible;
+  }
+  #actaContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .slide-menu { width: 0; }
+  .main-content { margin-left: 0; }
+  .form-container {
+    margin: 10px;
+    padding: 15px;
+  }
+}
+
+

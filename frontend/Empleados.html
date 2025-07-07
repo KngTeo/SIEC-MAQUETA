@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIEC – Empleados</title>
+
+  <!-- Bootstrap 4 CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <style>
+    /* Layout general */
+    body { overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; background: #f0f5ff; }
+    .main-content { flex: 1; margin-left: 250px; padding-bottom: 60px; }
+    .slide-menu { height: 100%; width: 250px; position: fixed; top: 0; left: 0; background: #d9e2ef; color: #333; padding-top: 60px; overflow-y: auto; }
+    .slide-menu a, .slide-menu .dropdown-title { display: block; padding: 12px 20px; text-decoration: none; color: #333; cursor: pointer; }
+    .slide-menu a:hover, .slide-menu .dropdown-title:hover { background: #ccc; }
+    .submenu { display: none; padding-left: 15px; }
+    .header { position: sticky; top: 0; z-index: 1001; background: #4caf50; color: white; padding: 10px; }
+    .footer { background: #4caf50; color: #fff; text-align: center; padding: 10px 0; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 999; }
+    .card-sm { border-radius: 12px; box-shadow: 0 0 6px rgba(0,0,0,.1); }
+    @media(max-width:767px) { .slide-menu { width: 0; } .main-content { margin-left: 0; } }
+  </style>
+</head>
+<body>
+  <!-- Menú lateral -->
+  <nav id="slideMenu" class="slide-menu">
+    <a href="Masterpage.html">Inicio</a>
+    <a href="Empleados.html">Registro de Empleados</a>
+    <a href="Equipos.html">Registro de Equipos</a>
+    <div class="dropdown-title" onclick="toggleSubmenu('actasSubmenu')">Actas de Entrega</div>
+    <div id="actasSubmenu" class="submenu">
+      <a href="ActaEntrega.html">Acta de Entrega</a>
+      <a href="ActaEntregaRenting.html">Renting</a>
+      <a href="ActaEntregaPerifericos.html">Periféricos</a>
+    </div>
+    <div class="dropdown-title" onclick="toggleSubmenu('mantenimientosSubmenu')">Mantenimientos</div>
+    <div id="mantenimientosSubmenu" class="submenu">
+      <a href="Cronogramas.html">Cronograma</a>
+    </div>
+    <a href="Informes.html">Informes</a>
+    <a href="Usuarios.html">Usuarios</a>
+    <a href="Login.html" onclick="logout()">Salir</a>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <header class="header d-flex align-items-center justify-content-between px-3">
+      <button class="btn btn-light btn-sm d-md-none" onclick="toggleMenu()">☰</button>
+      <h1 class="h5 m-0">Registro de Empleados</h1>
+    </header>
+
+    <div class="container mt-4">
+      <div class="row">
+        <!-- Formulario de nuevo empleado -->
+        <div class="col-lg-4 mb-4">
+          <div class="card card-sm p-3">
+            <h4 class="mb-3">Nuevo Empleado</h4>
+            <form id="userForm">
+              <div class="form-group">
+                <label for="cedula">Número de Cédula</label>
+                <input type="text" id="cedula" class="form-control" placeholder="Ingrese cédula" required>
+              </div>
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="apellidos">Apellidos</label>
+                <input type="text" id="apellidos" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="text" id="telefono" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="cargo">Cargo</label>
+                <select id="cargo" class="form-control">
+                  <option value="">Selecciona…</option>
+                  <option>Director Administrativo</option>
+                  <option>Programador</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="area">Área</label>
+                <select id="area" class="form-control">
+                  <option value="">Selecciona…</option>
+                  <option>Sistemas</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="correo">Correo</label>
+                <input type="email" id="correo" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="empresa">Empresa</label>
+                <input type="text" id="empresa" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="activo">Activo</label>
+                <select id="activo" class="form-control">
+                  <option>Si</option>
+                  <option>No</option>
+                </select>
+              </div>
+              <button class="btn btn-primary btn-block" type="submit">Agregar</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Tabla de empleados -->
+        <div class="col-lg-8">
+          <div class="card card-sm p-3">
+            <h4 class="mb-3">Lista de Empleados</h4>
+            <div class="table-responsive">
+              <table class="table table-bordered table-sm">
+                <thead class="thead-light">
+                  <tr>
+                    <th>ID</th>
+                    <th>Cédula</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Teléfono</th>
+                    <th>Cargo</th>
+                    <th>Área</th>
+                    <th>Correo</th>
+                    <th>Empresa</th>
+                    <th>Activo</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                  </tr>
+                </thead>
+                <tbody id="userTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div><!-- /row -->
+
+      <!-- Botón global Asignar / Desasignar equipo -->
+      <div class="text-right mb-4">
+        <button id="openModal" class="btn btn-info">
+          Asignar / Desasignar equipo
+        </button>
+      </div>
+
+      <!-- Modal Asignar / Desasignar -->
+      <div class="modal fade" id="asignarModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog"><div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Asignar / Desasignar equipo</h5>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Empleado</label>
+              <select id="empleadoSelect" class="form-control"></select>
+            </div>
+            <div class="form-group">
+              <label>Equipo (Serie)</label>
+              <select id="equipoSelect" class="form-control"></select>
+            </div>
+            <div class="form-group">
+              <label>Acción</label>
+              <select id="accion" class="form-control">
+                <option>Asignar</option>
+                <option>Desasignar</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Observaciones</label>
+              <textarea id="observacion" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button id="saveAssignment" class="btn btn-primary">Guardar</button>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Historial de Asignaciones -->
+      <div class="card card-sm p-3 mt-4">
+        <h4 class="mb-3">Historial de Asignaciones</h4>
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+              <tr>
+                <th>Empleado</th>
+                <th>Equipo</th>
+                <th>Observación</th>
+                <th>Acción</th>
+                <th>Fecha</th>
+              </tr>
+            </thead>
+            <tbody id="historialAsignaciones"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /container -->
+  </div><!-- /main-content -->
+
+  <footer class="footer">&copy; 2024 SIEC. Todos los derechos reservados.</footer>
+
+  <!-- Scripts: jQuery, Bootstrap, CRUD y Asignaciones -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="empleados.js"></script>
+  <script src="asignaciones.js"></script>
+  <script>
+    // Helpers menú
+    function toggleMenu() {
+      const m = document.getElementById('slideMenu'),
+            main = document.querySelector('.main-content');
+      if (!m.style.width || m.style.width==='0px') {
+        m.style.width='250px'; main.style.marginLeft='250px';
+      } else {
+        m.style.width='0'; main.style.marginLeft='0';
+      }
+    }
+    function toggleSubmenu(id) {
+      const s = document.getElementById(id);
+      s.style.display = s.style.display==='block'?'none':'block';
+    }
+    function logout() {
+      localStorage.clear();
+      location.href='Login.html';
+    }
+  </script>
+</body>
+</html>
