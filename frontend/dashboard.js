@@ -1,6 +1,6 @@
 // dashboard.js
 
-// Llamar API para contar empleados
+// 1) Contar empleados
 fetch('http://localhost:3000/api/empleados')
   .then(res => res.json())
   .then(data => {
@@ -10,50 +10,57 @@ fetch('http://localhost:3000/api/empleados')
     console.error('Error al contar empleados:', err);
   });
 
-// Llamar API para contar equipos y clasificar por estado
+// 2) Contar equipos y clasificar por estado
 fetch('http://localhost:3000/api/equipos')
   .then(res => res.json())
   .then(data => {
+    // Total de equipos
     document.getElementById('equiposCount').textContent = data.length;
 
-    const estadoConteo = {
-      Activo: 0,
-      Inactivo: 0,
-      Reparación: 0,
-      Baja: 0
+    // Función auxiliar para normalizar estados
+    const normalizeEstado = raw => {
+      const e = raw.trim().toLowerCase();
+      if (e.includes('repar'))       return 'Reparación';
+      if (e === 'activo')            return 'Activo';
+      if (e === 'inactivo')          return 'Inactivo';
+      if (e === 'baja')              return 'Baja';
+      return raw; // cualquier otro tal cual
     };
 
-    data.forEach(e => {
-      if (estadoConteo[e.Estado]) {
-        estadoConteo[e.Estado]++;
-      }
+    // Conteo dinámico
+    const estadoConteo = {};
+    data.forEach(eqp => {
+      const key = normalizeEstado(eqp.Estado);
+      estadoConteo[key] = (estadoConteo[key] || 0) + 1;
     });
 
-    document.getElementById('reparacionCount').textContent = estadoConteo['Reparación'] || 0;
+    // Actualizar contador específico
+    document.getElementById('reparacionCount').textContent =
+      estadoConteo['Reparación'] || 0;
 
-    // Crear gráfico
+    // 3) Gráfico dinámico
+    const labels = Object.keys(estadoConteo);
+    const values = labels.map(l => estadoConteo[l]);
+
     const ctx = document.getElementById('estadoChart').getContext('2d');
     new Chart(ctx, {
       type: 'pie',
       data: {
-        labels: Object.keys(estadoConteo),
+        labels,
         datasets: [{
-          label: 'Estados',
-          data: Object.values(estadoConteo),
+          data: values,
           backgroundColor: [
             '#28a745', // Activo
             '#6c757d', // Inactivo
             '#ffc107', // Reparación
             '#dc3545'  // Baja
-          ]
+          ].slice(0, labels.length) // sólo tantos colores como etiquetas
         }]
       },
       options: {
         responsive: true,
         plugins: {
-          legend: {
-            position: 'bottom'
-          }
+          legend: { position: 'bottom' }
         }
       }
     });
